@@ -1,3 +1,8 @@
+## v0.14.68 — 2026-10-10 — Google Search Console verification
+- Added the exact Google-provided verification file at `public/google66bb344ab51b92b5.html` so the build publishes it at the site root.
+- Kept the original verification token and filename unchanged.
+- No application UI or tool behavior changed.
+
 ## v0.14.67 — 2026-10-10 — UI scale, contact, and feedback collection
 - Changed: footer tagline “가능한 작업은 브라우저 안에서 처리합니다” 제거 및 중복 사이드바 상태 문구 제거
 - Changed: 데스크톱 전체 UI 125% 확대, 모바일 반응형 레이아웃은 원래 배율 유지
