@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.57 — Remove photo shelf + handcrafted UI refresh */
+/** TOOLBOX v0.14.67 — UI scale, contact email, and feedback collection */
 import { APP_VERSION } from "./version.ts";
 import { installTabiEasterEggs } from "./easter-eggs/tabi-easter-eggs.ts";
 import { registerFileSizeChecker } from "./tools/file/file-size-checker/manifest.ts";
@@ -236,7 +236,8 @@ function shell(inner: string): string {
   return `
   <header class="top"><div class="top-inner"><a class="brand" href="/" data-link data-tabi-brand><span class="brand-mark">T</span><span>TOOLBOX</span><small>v${APP_VERSION}</small></a><div class="global-search"><span class="search-symbol">⌕</span><input type="search" id="gs" placeholder="어떤 작업이 필요하신가요? 예: JPG 압축, JSON 정리" aria-label="도구 검색" autocomplete="off" /><kbd>/</kbd></div><div class="top-actions"><a href="/" data-link class="top-link">홈</a><a href="/about" data-link class="top-link">소개</a></div></div><div id="gsout" class="search-popover" aria-live="polite"></div></header>
   <main class="wrap" id="main">${inner}</main>
-  <footer class="site"><div class="wrap footer-inner"><div><strong>TOOLBOX</strong><span class="muted" data-tabi-footer-secret> · Local-first 웹 작업공간</span></div><button class="tabi-no-meaning" type="button" data-tabi-no-meaning>아무 의미 없는 버튼</button><nav><a href="/about" data-link>소개</a><a href="/privacy" data-link>개인정보</a><a href="/terms" data-link>약관</a><a href="/contact" data-link>문의</a></nav><p class="muted">가능한 작업은 브라우저 안에서 처리합니다. 파일 내용은 기본적으로 서버로 보내지 않습니다.</p></div></footer>`;
+  <footer class="site"><div class="wrap footer-inner"><div><strong>TOOLBOX</strong><span class="muted" data-tabi-footer-secret> · Local-first 웹 작업공간</span></div><button class="tabi-no-meaning" type="button" data-tabi-no-meaning>아무 의미 없는 버튼</button><nav><a href="/about" data-link>소개</a><a href="/privacy" data-link>개인정보</a><a href="/terms" data-link>약관</a><a href="/contact" data-link>문의</a></nav></div></footer>
+  <div class="feedback-overlay" id="feedback-overlay" hidden><section class="feedback-dialog" role="dialog" aria-modal="true" aria-labelledby="feedback-title" aria-describedby="feedback-description"><button class="feedback-close" type="button" data-feedback-dismiss aria-label="닫기">×</button><span class="eyebrow">TOOLBOX · EARLY ACCESS</span><h2 id="feedback-title">툴박스, 써보니까 어때요?</h2><p id="feedback-description">초기 버전을 함께 다듬고 있어요. 불편했던 점이나 새로 있으면 좋을 도구를 알려주세요. 의견은 다음 업데이트의 도구 제작 목록에 반영할게요.</p><form id="feedback-form" name="toolbox-feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="toolbox-feedback"><input type="hidden" name="subject" value="TOOLBOX 사용자 피드백"><p class="feedback-honeypot"><label>비워 두세요 <input name="bot-field" tabindex="-1" autocomplete="off"></label></p><label class="feedback-label" for="feedback-pain">사용하면서 불편했던 점</label><textarea id="feedback-pain" name="pain-points" rows="3" placeholder="예: 원하는 도구를 찾기 어려워요 / 버튼이 작아요"></textarea><label class="feedback-label" for="feedback-tools">생기면 좋을 것 같은 도구</label><textarea id="feedback-tools" name="suggested-tools" rows="3" placeholder="예: 이미지 여러 장 이름 한꺼번에 바꾸기"></textarea><label class="feedback-label" for="feedback-extra">그 외 의견 (선택)</label><textarea id="feedback-extra" name="other-feedback" rows="2" placeholder="자유롭게 적어주세요"></textarea><label class="feedback-label" for="feedback-email">답변 받을 이메일 (선택)</label><input id="feedback-email" name="email" type="email" placeholder="you@example.com" autocomplete="email"><div class="feedback-actions"><button class="secondary" type="button" data-feedback-dismiss>다음에 할게요</button><button type="submit" id="feedback-submit">의견 보내기</button></div><p class="feedback-status" id="feedback-status" role="status" aria-live="polite"></p><small>의견과 선택 입력한 이메일만 전송됩니다. 파일 내용은 보내지 마세요.</small></form></section></div>`;
 }
 
 function bindGlobal(): void {
@@ -288,6 +289,72 @@ function bindWorkspace(): void {
   }));
 }
 
+const FEEDBACK_SEEN_KEY = "toolbox:feedback:seen-tools:v1";
+const FEEDBACK_DISMISSED_KEY = "toolbox:feedback:dismissed:v1";
+function safeReadStringArray(key: string): string[] {
+  try { const value = JSON.parse(localStorage.getItem(key) ?? "[]"); return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : []; }
+  catch { return []; }
+}
+function recordFeedbackToolUse(slug: string): void {
+  const seen = safeReadStringArray(FEEDBACK_SEEN_KEY);
+  if (!seen.includes(slug)) {
+    seen.push(slug);
+    try { localStorage.setItem(FEEDBACK_SEEN_KEY, JSON.stringify(seen)); } catch { /* storage may be unavailable */ }
+  }
+  let dismissed = false;
+  try { dismissed = localStorage.getItem(FEEDBACK_DISMISSED_KEY) === "1"; } catch { /* storage may be unavailable */ }
+  if (seen.length >= 3 && !dismissed) {
+    window.setTimeout(() => {
+      const overlay = document.getElementById("feedback-overlay");
+      if (overlay && !overlay.hidden) return;
+      if (overlay) { overlay.hidden = false; document.body.classList.add("feedback-open"); document.getElementById("feedback-pain")?.focus(); }
+    }, 450);
+  }
+}
+function installFeedback(): void {
+  const overlay = document.getElementById("feedback-overlay");
+  const form = document.getElementById("feedback-form") as HTMLFormElement | null;
+  if (!overlay || !form) return;
+  overlay.querySelectorAll("[data-feedback-dismiss]").forEach((button) => button.addEventListener("click", () => {
+    overlay.hidden = true; document.body.classList.remove("feedback-open");
+    try { localStorage.setItem(FEEDBACK_DISMISSED_KEY, "1"); } catch { /* storage may be unavailable */ }
+  }));
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) overlay.querySelector<HTMLButtonElement>("[data-feedback-dismiss]")?.click();
+  });
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const submit = document.getElementById("feedback-submit") as HTMLButtonElement | null;
+    const status = document.getElementById("feedback-status");
+    const formData = new FormData(form);
+    const pain = String(formData.get("pain-points") ?? "").trim();
+    const suggestions = String(formData.get("suggested-tools") ?? "").trim();
+    const extra = String(formData.get("other-feedback") ?? "").trim();
+    if (!pain && !suggestions && !extra) {
+      if (status) status.textContent = "불편했던 점이나 추가 도구 아이디어를 하나만 적어줘도 좋아요.";
+      return;
+    }
+    if (submit) { submit.disabled = true; submit.textContent = "보내는 중…"; }
+    if (status) status.textContent = "";
+    try {
+      const response = await fetch(publicPath("/__forms.html"), {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (status) status.textContent = "소중한 의견 고마워요! 다음 업데이트 도구 후보로 모아둘게요. 🩵";
+      try { localStorage.setItem(FEEDBACK_DISMISSED_KEY, "1"); } catch { /* storage may be unavailable */ }
+      window.setTimeout(() => { overlay.hidden = true; document.body.classList.remove("feedback-open"); }, 1400);
+    } catch (error) {
+      console.error("TOOLBOX feedback submission failed", error);
+      if (status) status.textContent = "전송하지 못했어요. 잠시 후 다시 시도하거나 문의 페이지 이메일로 보내주세요.";
+    } finally {
+      if (submit) { submit.disabled = false; submit.textContent = "의견 보내기"; }
+    }
+  });
+}
+
 export function navigate(path: string): void {
   const target = path.startsWith(BASE_PATH + "/") || path === BASE_PATH ? path : publicPath(path);
   history.pushState({}, "", target);
@@ -304,7 +371,7 @@ function homeView(): string {
   const featured = ["image-compressor", "json-formatter", "file-size-checker", "pdf-merge", "csv-cleaner", "regex-tester"].map((slug) => getToolBySlug(slug)).filter(Boolean);
   const visible = category === "favorite" ? favorites : tools;
   return `
-    <div class="workspace-layout"><aside class="sidebar"><div class="sidebar-section"><div class="sidebar-label">도구 모음</div><a class="side-link ${!category ? "active" : ""}" href="/" data-link><span>⌂</span>전체 도구 <b>${allTools.length}</b></a><a class="side-link ${category === "favorite" ? "active" : ""}" href="/?category=favorite" data-link><span>★</span>즐겨찾기 <b>${favorites.length}</b></a></div><div class="sidebar-section"><div class="sidebar-label">분류</div>${Object.entries(CATEGORY_META).map(([key, meta]) => `<a class="side-link ${category === key ? "active" : ""}" href="/?category=${key}" data-link><span>${meta.icon}</span>${meta.label}<b>${counts[key]}</b></a>`).join("")}</div><div class="sidebar-foot"><span class="status-dot"></span><span>브라우저에서 처리합니다</span></div></aside>
+    <div class="workspace-layout"><aside class="sidebar"><div class="sidebar-section"><div class="sidebar-label">도구 모음</div><a class="side-link ${!category ? "active" : ""}" href="/" data-link><span>⌂</span>전체 도구 <b>${allTools.length}</b></a><a class="side-link ${category === "favorite" ? "active" : ""}" href="/?category=favorite" data-link><span>★</span>즐겨찾기 <b>${favorites.length}</b></a></div><div class="sidebar-section"><div class="sidebar-label">분류</div>${Object.entries(CATEGORY_META).map(([key, meta]) => `<a class="side-link ${category === key ? "active" : ""}" href="/?category=${key}" data-link><span>${meta.icon}</span>${meta.label}<b>${counts[key]}</b></a>`).join("")}</div></aside>
       <section class="workspace-main">${category === "favorite" ? `<div class="page-heading"><span class="eyebrow">즐겨찾기</span><h1>즐겨찾기</h1><p>저장해 둔 도구를 모아봤습니다.</p></div>` : category ? `<div class="page-heading"><span class="eyebrow">${categoryLabel(category)}</span><h1>${categoryLabel(category)} 도구</h1><p>${tools.length}개의 도구가 있습니다. 필요한 작업을 선택해 보세요.</p></div>` : `<section class="hero"><div><span class="eyebrow">브라우저 도구 모음</span><h1>필요한 작업,<br><em>여기서 바로 끝내보세요.</em></h1><p>이미지 변환부터 PDF 정리, 텍스트와 데이터 가공까지. 필요한 도구를 골라 사용하세요.</p><div class="hero-search"><span>⌕</span><input type="search" placeholder="도구 이름이나 작업을 입력하세요" data-hero-search aria-label="도구 검색"><kbd>⌘ K</kbd></div></div><div class="hero-orb"><span>${allTools.length}</span><small>TOOLS</small></div></section>`}
         ${!category && favorites.length ? `<section class="tool-section"><div class="section-title"><div><h2>★ 즐겨찾기</h2><span>자주 사용하는 도구를 모았습니다</span></div><a href="/?category=favorite" data-link>전체 보기 →</a></div><div class="tool-grid compact">${favorites.slice(0, 4).map((t) => toolCard(t!)).join("")}</div></section>` : ""}
         ${!category && !favorites.length ? `<section class="tool-section"><div class="section-title"><div><h2>빠른 시작</h2><span>필요한 작업을 선택해 보세요</span></div></div><div class="tool-grid compact">${featured.map((t) => toolCard(t!)).join("")}</div></section>` : ""}
@@ -357,7 +424,7 @@ export async function render(): Promise<void> {
     inner = staticView("이용약관", `<p>도구 결과는 참고용이며, 중요한 파일은 원본을 보관하세요. 악성 파일 검사를 우회하는 용도로 사용하지 마세요.</p>`);
   } else if (path === "/contact") {
     applyMeta({ title: "문의 | TOOLBOX", description: "오류·정책·권리 관련 문의.", canonical: "/contact", h1: "문의" });
-    inner = staticView("문의", `<p>오류 제보 시: 사용 브라우저, 도구 URL, 파일 종류(내용 제외), 오류 메시지를 함께 보내주세요.</p>`);
+    inner = staticView("문의", `<section class="contact-card"><p>도구 오류, 개선 제안, 새로운 도구 요청은 이메일로 보내주세요.</p><p><strong>이메일</strong><br><a href="mailto:saalhk77777777777777@gmail.com">saalhk77777777777777@gmail.com</a></p><a class="contact-mail-button" href="mailto:saalhk77777777777777@gmail.com?subject=TOOLBOX%20문의">✉ 메일로 문의하기</a><p class="muted">오류 제보 시 사용 브라우저, 도구 URL, 오류 메시지를 함께 보내주면 확인하기 쉬워요. 파일 내용이나 비밀번호 등 민감한 정보는 보내지 마세요.</p></section>`);
   } else {
     inner = staticView("404", `<p>페이지를 찾을 수 없습니다. <a href="/" data-link>홈으로</a></p>`);
   }
@@ -365,6 +432,7 @@ export async function render(): Promise<void> {
   app.innerHTML = html;
   bindGlobal();
   bindWorkspace();
+  installFeedback();
   installTabiEasterEggs();
   document.querySelector<HTMLInputElement>("[data-hero-search]")?.addEventListener("input", (e) => {
     const source = e.currentTarget as HTMLInputElement; const global = document.querySelector<HTMLInputElement>("#gs");
@@ -381,6 +449,7 @@ export async function render(): Promise<void> {
         mod.render(mount);
         const recent = readStoredSlugs(RECENTS_KEY).filter((s) => s !== tool.slug);
         writeStoredSlugs(RECENTS_KEY, [tool.slug, ...recent]);
+        recordFeedbackToolUse(tool.slug);
       } catch (error) {
         console.error("TOOLBOX tool load failed", error);
         mount.innerHTML = `<div class="error"><strong>도구를 불러오지 못했습니다.</strong><p>일시적인 브라우저 오류일 수 있습니다. 페이지를 새로고침한 뒤 다시 시도하세요.</p></div>`;
@@ -396,7 +465,7 @@ export async function render(): Promise<void> {
   };
 }
 
-// TOOLBOX v0.14.66 — GitHub Pages project-path-aware navigation.
+// TOOLBOX v0.14.67 — feedback collection and responsive UI scale.
 try {
   const redirectedPath = sessionStorage.getItem("toolbox:github-pages-redirect");
   if (redirectedPath) {

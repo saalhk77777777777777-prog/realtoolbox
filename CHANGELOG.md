@@ -1,3 +1,12 @@
+## v0.14.67 — 2026-10-10 — UI scale, contact, and feedback collection
+- Changed: footer tagline “가능한 작업은 브라우저 안에서 처리합니다” 제거 및 중복 사이드바 상태 문구 제거
+- Changed: 데스크톱 전체 UI 125% 확대, 모바일 반응형 레이아웃은 원래 배율 유지
+- Added: 문의 페이지에 saalhk77777777777777@gmail.com 및 mailto “메일로 문의하기” 링크
+- Added: 서로 다른 도구 3개를 연 뒤 1회 피드백 팝업, 불편 사항·도구 아이디어·기타 의견·선택 이메일 수집
+- Added: Netlify Forms 정적 폼 정의 파일 `public/__forms.html`, URL-encoded AJAX 제출 및 스팸 허니팟
+- Privacy: 피드백은 사용자가 직접 제출한 내용만 전송; 도구 파일이나 파일 내용은 수집하지 않음
+- Verification: `npm run build` passed; `npm test` passed (55 files, 795 tests); `git diff --check` passed
+
 ## v0.14.66 — GitHub Pages Project Path Support
 - Configured Vite for the existing `TOOLBOX` repository path (`/TOOLBOX/`) rather than assuming a user-site root.
 - Updated in-app links, client-side routing, canonical URLs, sitemap/robots paths, manifest assets, the Tabi Easter-egg asset, and 404 recovery for project-site deployment.
