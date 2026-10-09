@@ -1,0 +1,13 @@
+# TOOLBOX v0.14.65 — Netlify static-site deployment
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Static files in dist are served directly; these rules provide client-side tool routes.
+[[redirects]]
+  from = "/tools/*"
+  to = "/index.html"
+  status = 200

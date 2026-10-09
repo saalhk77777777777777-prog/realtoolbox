@@ -1,0 +1,2 @@
+/** TOOLBOX v0.10.0 — HTML Tag Remover */
+import type {ToolError}from"../../../core/types.ts";export function validate(input:unknown):ToolError|null{const v=input as {text?:unknown}|null;if(!v||typeof v.text!=="string"||!v.text.trim())return {code:"USER_INPUT",what:"HTML 입력이 필요합니다.",why:"입력이 비어 있습니다.",how:"HTML을 붙여 넣으세요."};return null}export async function process(input:{text:string}){const el=document.createElement("div");el.innerHTML=input.text;return {text:(el.textContent||"").replace(/\s+\n/g,"\n").replace(/\n\s+/g,"\n").trim()}}

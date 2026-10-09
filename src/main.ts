@@ -1,0 +1,408 @@
+/** TOOLBOX v0.14.57 — Remove photo shelf + handcrafted UI refresh */
+import { APP_VERSION } from "./version.ts";
+import { installTabiEasterEggs } from "./easter-eggs/tabi-easter-eggs.ts";
+import { registerFileSizeChecker } from "./tools/file/file-size-checker/manifest.ts";
+import { registerFileNameAnalyzer } from "./tools/file/file-name-analyzer/manifest.ts";
+import { registerFileSignatureChecker } from "./tools/file/file-signature-checker/manifest.ts";
+import { registerDuplicateFinder } from "./tools/file/duplicate-finder/manifest.ts";
+import { registerFileChecksum } from "./tools/file/file-checksum/manifest.ts";
+import { registerFileEncodingDetector } from "./tools/file/file-encoding-detector/manifest.ts";
+import { registerLineEndingDetector } from "./tools/file/line-ending-detector/manifest.ts";
+import { registerFileEntropyAnalyzer } from "./tools/file/file-entropy-analyzer/manifest.ts";
+import { registerFileContentPreviewer } from "./tools/file/file-content-previewer/manifest.ts";
+import { registerBatchFileZipCreator } from "./tools/file/batch-file-zip-creator/manifest.ts";
+import { registerZipInspector } from "./tools/file/zip-inspector/manifest.ts";
+import { registerTextCounter } from "./tools/text/text-counter/manifest.ts";
+import { registerBase64 } from "./tools/developer/base64/manifest.ts";
+import { registerUrlCoder } from "./tools/developer/url-encoder/manifest.ts";
+import { registerTimestamp } from "./tools/developer/timestamp-converter/manifest.ts";
+import { registerHash } from "./tools/developer/hash-generator/manifest.ts";
+import { registerJson } from "./tools/developer/json-formatter/manifest.ts";
+import { registerUuid } from "./tools/developer/uuid-generator/manifest.ts";
+import { registerEntity } from "./tools/developer/html-entity/manifest.ts";
+import { registerUrlParser } from "./tools/developer/url-parser/manifest.ts";
+import { registerJwt } from "./tools/developer/jwt-decoder/manifest.ts";
+import { registerRegex } from "./tools/developer/regex-tester/manifest.ts";
+import { registerCsv } from "./tools/data/csv-cleaner/manifest.ts";
+import { registerChart } from "./tools/data/csv-chart/manifest.ts";
+import { registerImageCompressor } from "./tools/image/image-compressor/manifest.ts";
+import { registerImageResizer } from "./tools/image/image-resizer/manifest.ts";
+import { registerImageConverter } from "./tools/image/image-converter/manifest.ts";
+import { registerVideoToWebP } from "./tools/image/video-to-webp/manifest.ts";
+import { registerTarget } from "./tools/image/target-size-compressor/manifest.ts";
+import { registerColor } from "./tools/image/color-extractor/manifest.ts";
+import { register as registerImageMetadataViewer } from "./tools/image/image-metadata-viewer/manifest.ts";
+import { register as registerImageGrayscale } from "./tools/image/image-grayscale/manifest.ts";
+import { register as registerImageBlur } from "./tools/image/image-blur/manifest.ts";
+import { register as registerImagePixelate } from "./tools/image/image-pixelate/manifest.ts";
+import { register as registerImageHistogram } from "./tools/image/image-histogram/manifest.ts";
+import { register as registerImageDataUri } from "./tools/image/image-data-uri/manifest.ts";
+import { registerCropFlip } from "./tools/image/crop-rotate-flip/manifest.ts";
+import { registerPdfMeta } from "./tools/pdf/pdf-metadata/manifest.ts";
+import { registerPdfMerge } from "./tools/pdf/pdf-merge/manifest.ts";
+import { registerPdfSplit } from "./tools/pdf/pdf-split/manifest.ts";
+import { registerPdfCompress } from "./tools/pdf/pdf-compress/manifest.ts";
+import { registerPdfToImage } from "./tools/pdf/pdf-to-image/manifest.ts";
+import { registerPdfText } from "./tools/pdf/pdf-text-extractor/manifest.ts";
+import { registerPdfPageReorder } from "./tools/pdf/pdf-page-reorder/manifest.ts";
+import { registerPdfPageRotate } from "./tools/pdf/pdf-page-rotate/manifest.ts";
+import { registerPdfWatermark } from "./tools/pdf/pdf-watermark/manifest.ts";
+import { registerPdfImageExtractor } from "./tools/pdf/pdf-image-extractor/manifest.ts";
+import { registerPdfTextSearch } from "./tools/pdf/pdf-text-search/manifest.ts";
+import { registerPdfPagePreview } from "./tools/pdf/pdf-page-preview/manifest.ts";
+import { registerPdfCompare } from "./tools/pdf/pdf-compare/manifest.ts";
+import { registerPdfPageNumberer } from "./tools/pdf/pdf-page-numberer/manifest.ts";
+import { registerImageToPdf } from "./tools/pdf/image-to-pdf/manifest.ts";
+import { registerCase } from "./tools/text/case-converter/manifest.ts";
+import { registerWhitespace } from "./tools/text/whitespace-cleaner/manifest.ts";
+import { registerLineSort } from "./tools/text/line-sorter/manifest.ts";
+import { registerDuplicate } from "./tools/text/duplicate-line-remover/manifest.ts";
+import { registerSlug } from "./tools/text/slug-generator/manifest.ts";
+import { registerDiff } from "./tools/text/text-diff/manifest.ts";
+import { registerNumberBaseConverter } from "./tools/developer/number-base-converter/manifest.ts";
+import { registerHtmlFormatter } from "./tools/developer/html-formatter/manifest.ts";
+import { registerJsonToCsv } from "./tools/data/json-to-csv/manifest.ts";
+import { registerCsvToJson } from "./tools/data/csv-to-json/manifest.ts";
+import { registerJsonMinifier } from "./tools/developer/json-minifier/manifest.ts";
+import { registerQueryStringBuilder } from "./tools/developer/query-string-builder/manifest.ts";
+import { registerJsonLines } from "./tools/data/json-lines/manifest.ts";
+import { registerLineNumberer } from "./tools/text/line-numberer/manifest.ts";
+import { registerNumberExtractor } from "./tools/text/number-extractor/manifest.ts";
+import { registerUrlExtractor } from "./tools/text/url-extractor/manifest.ts";
+import { registerHtmlTagRemover } from "./tools/developer/html-tag-remover/manifest.ts";
+import { registerWhitespaceVisualizer } from "./tools/text/whitespace-visualizer/manifest.ts";
+import { registerMarkdownTableGenerator } from "./tools/developer/markdown-table-generator/manifest.ts";
+import { registerRegexEscape } from "./tools/developer/regex-escape/manifest.ts";
+import { registerCharacterFrequency } from "./tools/text/character-frequency/manifest.ts";
+import { registerTextReverser } from "./tools/text/text-reverser/manifest.ts";
+import { registerWordFrequencyAnalyzer } from "./tools/text/word-frequency-analyzer/manifest.ts";
+import { registerSentenceCounter } from "./tools/text/sentence-counter/manifest.ts";
+import { registerReadingTimeCalculator } from "./tools/text/reading-time-calculator/manifest.ts";
+import { registerLineTrimTool } from "./tools/text/line-trim-tool/manifest.ts";
+import { registerIndentUnindent } from "./tools/text/indent-unindent/manifest.ts";
+import { registerPrefixSuffixAdder } from "./tools/text/prefix-suffix-adder/manifest.ts";
+import { registerNewlineConverter } from "./tools/text/newline-converter/manifest.ts";
+import { registerUnicodeInspector } from "./tools/text/unicode-inspector/manifest.ts";
+import { registerJsonToXml } from "./tools/data/json-to-xml/manifest.ts";
+import { registerXmlToJson } from "./tools/data/xml-to-json/manifest.ts";
+import { registerCsvTranspose } from "./tools/data/csv-transpose/manifest.ts";
+import { registerCsvFilter } from "./tools/data/csv-filter/manifest.ts";
+import { registerCsvSorter } from "./tools/data/csv-sorter/manifest.ts";
+import { registerCsvColumnSelector } from "./tools/data/csv-column-selector/manifest.ts";
+import { registerJsonPathQuery } from "./tools/data/json-path-query/manifest.ts";
+import { registerJsonFlattenUnflatten } from "./tools/data/json-flatten-unflatten/manifest.ts";
+import { registerExifRemover } from "./tools/image/exif-remover/manifest.ts";
+import { registerYamlFormatter } from "./tools/developer/yaml-formatter/manifest.ts";
+import { registerXmlFormatter } from "./tools/developer/xml-formatter/manifest.ts";
+import { registerSqlFormatter } from "./tools/developer/sql-formatter/manifest.ts";
+import { registerCssFormatterMinifier } from "./tools/developer/css-formatter-minifier/manifest.ts";
+import { registerJsTsFormatter } from "./tools/developer/js-ts-formatter/manifest.ts";
+import { registerCronExpressionGenerator } from "./tools/developer/cron-expression-generator/manifest.ts";
+import { registerColorConverter } from "./tools/developer/color-converter/manifest.ts";
+import { registerHttpStatusAnalyzer } from "./tools/developer/http-status-analyzer/manifest.ts";
+import { registerDateCalculator } from "./tools/utility/date-calculator/manifest.ts";
+import { registerUnitConverter } from "./tools/utility/unit-converter/manifest.ts";
+import { getTool, getToolBySlug, listTools } from "./core/toolRegistry.ts";
+import { applyMeta } from "./seo/meta.ts";
+import { track } from "./analytics/analytics.ts";
+import { searchTools } from "./search/searchIndex.ts";
+
+registerFileSizeChecker();
+registerFileNameAnalyzer();
+registerFileSignatureChecker();
+registerDuplicateFinder();
+registerFileChecksum();
+registerFileEncodingDetector();
+registerLineEndingDetector();
+registerFileEntropyAnalyzer();
+registerFileContentPreviewer();
+registerBatchFileZipCreator();
+registerZipInspector();
+registerTextCounter();
+registerBase64();
+registerUrlCoder();
+registerTimestamp();
+registerHash();
+registerJson();
+registerUuid();
+registerEntity();
+registerUrlParser();
+registerJwt();
+registerRegex();
+registerCsv();
+registerChart();
+registerImageCompressor();
+registerImageResizer();
+registerImageConverter();
+registerVideoToWebP();
+registerTarget();
+registerColor();
+registerImageMetadataViewer();
+registerImageGrayscale();
+registerImageBlur();
+registerImagePixelate();
+registerImageHistogram();
+registerImageDataUri();
+registerCropFlip();
+registerPdfMeta();
+registerPdfMerge();
+registerPdfSplit();
+registerPdfCompress();
+registerPdfToImage();
+registerPdfText();
+registerPdfPageReorder();
+registerPdfPageRotate();
+registerPdfWatermark();
+registerPdfImageExtractor();
+registerPdfTextSearch();
+registerPdfPagePreview();
+registerPdfCompare();
+registerPdfPageNumberer();
+registerImageToPdf();
+registerCase();
+registerWhitespace();
+registerLineSort();
+registerDuplicate();
+registerSlug();
+registerDiff();
+registerWhitespaceVisualizer();
+registerHtmlTagRemover();
+registerUrlExtractor();
+registerNumberExtractor();
+registerLineNumberer();
+registerJsonLines();
+registerQueryStringBuilder();
+registerJsonMinifier();
+registerCsvToJson();
+registerJsonToCsv();
+registerHtmlFormatter();
+registerNumberBaseConverter();
+registerMarkdownTableGenerator();
+registerRegexEscape();
+registerCharacterFrequency();
+registerTextReverser();
+registerUnicodeInspector();
+registerUnitConverter();
+registerDateCalculator();
+registerHttpStatusAnalyzer();
+registerColorConverter();
+registerCronExpressionGenerator();
+registerJsTsFormatter();
+registerCssFormatterMinifier();
+registerSqlFormatter();
+registerXmlFormatter();
+registerYamlFormatter();
+registerExifRemover();
+registerJsonFlattenUnflatten();
+registerJsonPathQuery();
+registerCsvColumnSelector();
+registerCsvSorter();
+registerCsvFilter();
+registerCsvTranspose();
+registerXmlToJson();
+registerJsonToXml();
+registerNewlineConverter();
+registerPrefixSuffixAdder();
+registerIndentUnindent();
+registerLineTrimTool();
+registerReadingTimeCalculator();
+registerSentenceCounter();
+registerWordFrequencyAnalyzer();
+
+const app = document.getElementById("app")!;
+const CATEGORY_META: Record<string, { label: string; icon: string }> = {
+  file: { label: "파일", icon: "▣" }, image: { label: "이미지", icon: "◈" }, pdf: { label: "PDF", icon: "▤" },
+  data: { label: "데이터", icon: "◆" }, developer: { label: "개발자", icon: "⌘" }, text: { label: "텍스트", icon: "T" }, utility: { label: "유틸리티", icon: "⚙" },
+};
+const FAVORITES_KEY = "toolbox:favorites:v1";
+const RECENTS_KEY = "toolbox:recents:v1";
+function readStoredSlugs(key: string): string[] { try { const v = JSON.parse(localStorage.getItem(key) ?? "[]"); return Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []; } catch { return []; } }
+function writeStoredSlugs(key: string, values: string[]): void { try { localStorage.setItem(key, JSON.stringify(values.slice(0, 12))); } catch { /* private mode */ } }
+function categoryLabel(category: string): string { return CATEGORY_META[category]?.label ?? category; }
+function categoryIcon(category: string): string { return CATEGORY_META[category]?.icon ?? "•"; }
+function toolCard(t: ReturnType<typeof listTools>[number]): string {
+  const favorite = readStoredSlugs(FAVORITES_KEY).includes(t.slug);
+  return `<article class="tool-card"><a class="tool-card-main" href="/tools/${t.slug}" data-link><span class="tool-icon">${categoryIcon(t.category)}</span><span class="tool-card-copy"><strong>${t.title}</strong><span>${t.description}</span></span><span class="tool-arrow">→</span></a><button class="favorite-btn ${favorite ? "is-favorite" : ""}" type="button" data-favorite="${t.slug}" aria-label="${favorite ? "즐겨찾기 해제" : "즐겨찾기 추가"}">${favorite ? "★" : "☆"}</button></article>`;
+}
+window.addEventListener("scroll", () => {
+  const y = window.scrollY;
+  document.querySelector("header.top")?.classList.toggle("scrolled", y > 80);
+}, { passive: true });
+
+function shell(inner: string): string {
+  return `
+  <header class="top"><div class="top-inner"><a class="brand" href="/" data-link data-tabi-brand><span class="brand-mark">T</span><span>TOOLBOX</span><small>v${APP_VERSION}</small></a><div class="global-search"><span class="search-symbol">⌕</span><input type="search" id="gs" placeholder="어떤 작업이 필요하신가요? 예: JPG 압축, JSON 정리" aria-label="도구 검색" autocomplete="off" /><kbd>/</kbd></div><div class="top-actions"><a href="/" data-link class="top-link">홈</a><a href="/about" data-link class="top-link">소개</a></div></div><div id="gsout" class="search-popover" aria-live="polite"></div></header>
+  <main class="wrap" id="main">${inner}</main>
+  <footer class="site"><div class="wrap footer-inner"><div><strong>TOOLBOX</strong><span class="muted" data-tabi-footer-secret> · Local-first 웹 작업공간</span></div><button class="tabi-no-meaning" type="button" data-tabi-no-meaning>아무 의미 없는 버튼</button><nav><a href="/about" data-link>소개</a><a href="/privacy" data-link>개인정보</a><a href="/terms" data-link>약관</a><a href="/contact" data-link>문의</a></nav><p class="muted">가능한 작업은 브라우저 안에서 처리합니다. 파일 내용은 기본적으로 서버로 보내지 않습니다.</p></div></footer>`;
+}
+
+function bindGlobal(): void {
+  app.querySelectorAll("[data-link]").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const href = (a as HTMLAnchorElement).getAttribute("href")!;
+      e.preventDefault();
+      navigate(href);
+    });
+  });
+  const input = document.querySelector<HTMLInputElement>("#gs")!;
+  const out = document.querySelector<HTMLDivElement>("#gsout")!;
+  const doSearch = () => {
+    const q = input.value;
+    track("search", { qLength: q.length });
+    const res = searchTools(q);
+    out.innerHTML =
+      res.length === 0
+        ? `<div class="search-empty"><strong>검색 결과가 없어</strong><span>다른 키워드나 파일 형식으로 검색해봐.</span></div>`
+        : `<div class="search-results-head"><strong>${res.length}개 결과</strong><span>상위 8개 표시</span></div><div class="search-results">${res.slice(0, 8).map((r) => `<a href="/tools/${r.slug}" data-link><span class="search-result-icon">${categoryIcon(r.category)}</span><span><strong>${r.title}</strong><small>${categoryLabel(r.category)} · ${getToolBySlug(r.slug)?.description ?? '도구 열기'}</small></span><b>→</b></a>`).join("")}</div>`;
+    out.querySelectorAll("[data-link]").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        track("search_result_click", {});
+        navigate((a as HTMLAnchorElement).getAttribute("href")!);
+      });
+    });
+  };
+  input.addEventListener("input", () => {
+    if (input.value.trim()) doSearch();
+    else out.innerHTML = "";
+  });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") doSearch();
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      input.focus();
+    }
+  });
+}
+
+function bindWorkspace(): void {
+  app.querySelectorAll<HTMLButtonElement>("[data-favorite]").forEach((button) => button.addEventListener("click", (e) => {
+    e.preventDefault(); e.stopPropagation();
+    const slug = button.dataset.favorite!;
+    const values = readStoredSlugs(FAVORITES_KEY);
+    writeStoredSlugs(FAVORITES_KEY, values.includes(slug) ? values.filter((v) => v !== slug) : [slug, ...values]);
+    void render();
+  }));
+}
+
+export function navigate(path: string): void {
+  history.pushState({}, "", path);
+  render();
+}
+
+function homeView(): string {
+  const category = new URLSearchParams(location.search).get("category");
+  const allTools = listTools();
+  const tools = category && category !== "all" && category !== "favorite" ? allTools.filter((t) => t.category === category) : allTools;
+  const counts = Object.fromEntries(Object.keys(CATEGORY_META).map((c) => [c, allTools.filter((t) => t.category === c).length]));
+  const favorites = readStoredSlugs(FAVORITES_KEY).map((slug) => getToolBySlug(slug)).filter(Boolean);
+  const recents = readStoredSlugs(RECENTS_KEY).map((slug) => getToolBySlug(slug)).filter(Boolean);
+  const featured = ["image-compressor", "json-formatter", "file-size-checker", "pdf-merge", "csv-cleaner", "regex-tester"].map((slug) => getToolBySlug(slug)).filter(Boolean);
+  const visible = category === "favorite" ? favorites : tools;
+  return `
+    <div class="workspace-layout"><aside class="sidebar"><div class="sidebar-section"><div class="sidebar-label">도구 모음</div><a class="side-link ${!category ? "active" : ""}" href="/" data-link><span>⌂</span>전체 도구 <b>${allTools.length}</b></a><a class="side-link ${category === "favorite" ? "active" : ""}" href="/?category=favorite" data-link><span>★</span>즐겨찾기 <b>${favorites.length}</b></a></div><div class="sidebar-section"><div class="sidebar-label">분류</div>${Object.entries(CATEGORY_META).map(([key, meta]) => `<a class="side-link ${category === key ? "active" : ""}" href="/?category=${key}" data-link><span>${meta.icon}</span>${meta.label}<b>${counts[key]}</b></a>`).join("")}</div><div class="sidebar-foot"><span class="status-dot"></span><span>브라우저에서 처리합니다</span></div></aside>
+      <section class="workspace-main">${category === "favorite" ? `<div class="page-heading"><span class="eyebrow">즐겨찾기</span><h1>즐겨찾기</h1><p>저장해 둔 도구를 모아봤습니다.</p></div>` : category ? `<div class="page-heading"><span class="eyebrow">${categoryLabel(category)}</span><h1>${categoryLabel(category)} 도구</h1><p>${tools.length}개의 도구가 있습니다. 필요한 작업을 선택해 보세요.</p></div>` : `<section class="hero"><div><span class="eyebrow">브라우저 도구 모음</span><h1>필요한 작업,<br><em>여기서 바로 끝내보세요.</em></h1><p>이미지 변환부터 PDF 정리, 텍스트와 데이터 가공까지. 필요한 도구를 골라 사용하세요.</p><div class="hero-search"><span>⌕</span><input type="search" placeholder="도구 이름이나 작업을 입력하세요" data-hero-search aria-label="도구 검색"><kbd>⌘ K</kbd></div></div><div class="hero-orb"><span>${allTools.length}</span><small>TOOLS</small></div></section>`}
+        ${!category && favorites.length ? `<section class="tool-section"><div class="section-title"><div><h2>★ 즐겨찾기</h2><span>자주 사용하는 도구를 모았습니다</span></div><a href="/?category=favorite" data-link>전체 보기 →</a></div><div class="tool-grid compact">${favorites.slice(0, 4).map((t) => toolCard(t!)).join("")}</div></section>` : ""}
+        ${!category && !favorites.length ? `<section class="tool-section"><div class="section-title"><div><h2>빠른 시작</h2><span>필요한 작업을 선택해 보세요</span></div></div><div class="tool-grid compact">${featured.map((t) => toolCard(t!)).join("")}</div></section>` : ""}
+        ${!category && recents.length ? `<section class="tool-section"><div class="section-title"><div><h2>최근 사용</h2><span>최근에 사용한 도구입니다</span></div></div><div class="tool-grid compact">${recents.slice(0, 4).map((t) => toolCard(t!)).join("")}</div></section>` : ""}
+        <section class="tool-section all-tools-section"><div class="section-title"><div><h2>${category === "favorite" ? "즐겨찾기" : category ? `${categoryLabel(category)} 도구` : "전체 도구"}</h2><span>${visible.length}개의 도구</span></div><div class="view-note">검색창에서 도구를 찾아보세요</div></div><div class="tool-grid">${visible.map((t) => toolCard(t!)).join("") || `<div class="empty-state"><strong>저장한 도구가 없습니다.</strong><span>도구 카드의 ☆를 눌러 즐겨찾기에 추가하세요.</span></div>`}</div></section>
+      </section></div>`;
+}
+
+function staticView(h1: string, body: string): string {
+  return `<h1>${h1}</h1>${body}`;
+}
+
+async function toolView(slug: string): Promise<string> {
+  const tool = getToolBySlug(slug);
+  if (!tool) return staticView("404 — 도구를 찾을 수 없습니다", `<p><a href="/" data-link>홈으로</a></p>`);
+  applyMeta({
+    title: `${tool.title} | TOOLBOX`,
+    description: tool.description,
+    canonical: `/tools/${tool.slug}`,
+    h1: tool.title,
+  });
+  track("tool_open", { tool: tool.id });
+  return `
+    <div class="tool-page"><a class="back-link" href="/?category=${tool.category}" data-link>← ${categoryLabel(tool.category)}로 돌아가기</a><div class="tool-heading"><div><div class="tool-breadcrumb"><span>${categoryIcon(tool.category)}</span>${categoryLabel(tool.category)}</div><h1>${tool.title}</h1><p>${tool.description}</p></div><button class="tool-favorite-large ${readStoredSlugs(FAVORITES_KEY).includes(tool.slug) ? "is-favorite" : ""}" type="button" data-favorite="${tool.slug}">★ 즐겨찾기</button></div><div class="tool-meta"><span class="local-badge"><i></i>${tool.localProcessing ? "브라우저에서 처리 · 파일 업로드 없음" : "서버 처리 필요"}</span><span>입력: ${tool.inputTypes.join(", ")}</span></div><div id="tool-mount" class="tool-mount"></div><section class="related-section"><div class="section-title"><div><h2>같이 쓰면 좋은 도구</h2><span>함께 사용하기 좋은 도구입니다</span></div></div><div class="tool-grid compact">${tool.relatedTools.map((rid) => getTool(rid)).filter(Boolean).map((t) => toolCard(t!)).join("") || `<p class="muted">아직 연결된 관련 도구가 없습니다.</p>`}</div></section></div>`;
+}
+
+export async function render(): Promise<void> {
+  const path = location.pathname;
+  let inner = "";
+  if (path === "/") {
+    applyMeta({
+      title: "TOOLBOX — 브라우저 하나로 끝내는 파일·이미지·데이터 도구",
+      description: "설치 없이 파일 크기 확인, 이미지 압축·변환, JSON 정리 등을 브라우저에서 처리하는 Local-first 웹 작업공간입니다.",
+      canonical: "/",
+      h1: "TOOLBOX",
+    });
+    track("page_view", { path });
+    inner = homeView();
+  } else if (path.startsWith("/tools/")) {
+    track("page_view", { path });
+    inner = await toolView(path.replace("/tools/", ""));
+  } else if (path === "/about") {
+    applyMeta({ title: "소개 | TOOLBOX", description: "TOOLBOX는 Local-first 범용 웹 작업공간입니다.", canonical: "/about", h1: "소개" });
+    inner = staticView("소개", `<p>TOOLBOX는 파일·이미지·PDF·데이터·텍스트 작업을 브라우저 하나에서 처리하는 Local-first 작업공간입니다.</p>`);
+  } else if (path === "/privacy") {
+    applyMeta({ title: "개인정보처리방침 | TOOLBOX", description: "TOOLBOX 개인정보 처리 및 로컬 처리 원칙.", canonical: "/privacy", h1: "개인정보" });
+    inner = staticView("개인정보처리방침 (v0.10.0 요약)", `<ul><li>로컬 처리 우선: File Size Checker는 파일을 서버로 전송하지 않습니다.</li><li>수집하지 않는 정보: 파일 내용, 파일명, 토큰, 비밀번호.</li><li>Analytics: 최소 사용 이벤트만 수집합니다.</li><li>문의: /contact 경로를 이용하세요.</li></ul>`);
+  } else if (path === "/terms") {
+    applyMeta({ title: "이용약관 | TOOLBOX", description: "TOOLBOX 이용약관.", canonical: "/terms", h1: "이용약관" });
+    inner = staticView("이용약관", `<p>도구 결과는 참고용이며, 중요한 파일은 원본을 보관하세요. 악성 파일 검사를 우회하는 용도로 사용하지 마세요.</p>`);
+  } else if (path === "/contact") {
+    applyMeta({ title: "문의 | TOOLBOX", description: "오류·정책·권리 관련 문의.", canonical: "/contact", h1: "문의" });
+    inner = staticView("문의", `<p>오류 제보 시: 사용 브라우저, 도구 URL, 파일 종류(내용 제외), 오류 메시지를 함께 보내주세요.</p>`);
+  } else {
+    inner = staticView("404", `<p>페이지를 찾을 수 없습니다. <a href="/" data-link>홈으로</a></p>`);
+  }
+  app.innerHTML = shell(inner);
+  bindGlobal();
+  bindWorkspace();
+  installTabiEasterEggs();
+  document.querySelector<HTMLInputElement>("[data-hero-search]")?.addEventListener("input", (e) => {
+    const source = e.currentTarget as HTMLInputElement; const global = document.querySelector<HTMLInputElement>("#gs");
+    if (global) { global.value = source.value; global.dispatchEvent(new Event("input")); global.focus(); }
+  });
+  // mount tool UI
+  if (path.startsWith("/tools/")) {
+    const slug = path.replace("/tools/", "");
+    const tool = getToolBySlug(slug);
+    if (tool) {
+      const mount = document.getElementById("tool-mount")!;
+      try {
+        const mod = await tool.load();
+        mod.render(mount);
+        const recent = readStoredSlugs(RECENTS_KEY).filter((s) => s !== tool.slug);
+        writeStoredSlugs(RECENTS_KEY, [tool.slug, ...recent]);
+      } catch (error) {
+        console.error("TOOLBOX tool load failed", error);
+        mount.innerHTML = `<div class="error"><strong>도구를 불러오지 못했습니다.</strong><p>일시적인 브라우저 오류일 수 있습니다. 페이지를 새로고침한 뒤 다시 시도하세요.</p></div>`;
+      }
+    }
+  }
+  // keyboard: "/" focuses search, Esc closes
+  document.onkeydown = (e) => {
+    if (e.key === "/" && (document.activeElement?.tagName !== "INPUT")) {
+      e.preventDefault();
+      document.getElementById("gs")?.focus();
+    }
+  };
+}
+
+// TOOLBOX v0.14.65 — Restore client-side routes after GitHub Pages 404 fallback.
+try {
+  const redirectedPath = sessionStorage.getItem("toolbox:github-pages-redirect");
+  if (redirectedPath) {
+    sessionStorage.removeItem("toolbox:github-pages-redirect");
+    if (redirectedPath.startsWith("/") && !redirectedPath.startsWith("//")) {
+      history.replaceState({}, "", redirectedPath);
+    }
+  }
+} catch {
+  // Private browsing/storage restrictions should not prevent the app from starting.
+}
+
+window.addEventListener("popstate", () => void render());
+void render();

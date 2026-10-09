@@ -1,0 +1,5 @@
+/** TOOLBOX v0.14.0 — image-histogram processor */
+import type { ToolError } from "../../../core/types.ts";
+export interface Input{file:File} export interface Output{width:number;height:number;red:number[];green:number[];blue:number[];pixelCount:number}
+export function validate(input:unknown):ToolError|null{const v=input as Partial<Input>|null;if(!v||!(v.file instanceof File))return {code:"USER_INPUT",what:"이미지 파일이 필요합니다.",why:"입력이 없습니다.",how:"이미지를 선택하세요."};return null}
+export async function process(input:Input):Promise<Output>{const b=await createImageBitmap(input.file);try{const c=document.createElement("canvas");c.width=b.width;c.height=b.height;const x=c.getContext("2d");if(!x)throw new Error("Canvas unavailable");x.drawImage(b,0,0);const d=x.getImageData(0,0,c.width,c.height).data,r=Array(256).fill(0),g=Array(256).fill(0),bb=Array(256).fill(0);for(let i=0;i<d.length;i+=4){if(d[i+3]===0)continue;r[d[i]]++;g[d[i+1]]++;bb[d[i+2]]++}return {width:b.width,height:b.height,red:r,green:g,blue:bb,pixelCount:b.width*b.height}}finally{b.close?.()}}

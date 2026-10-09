@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TOOLBOX — 브라우저 하나로 끝내는 파일·이미지·데이터 도구</title>
+    <meta
+      name="description"
+      content="TOOLBOX는 설치 없이 파일 크기 확인, 이미지 압축·변환, JSON 정리 등을 브라우저에서 처리하는 Local-first 웹 작업공간입니다."
+    />
+    <link rel="canonical" href="/" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta property="og:title" content="TOOLBOX — 범용 웹 도구 플랫폼" />
+    <meta
+      property="og:description"
+      content="귀찮은 컴퓨터 작업을 브라우저 하나로. Local-first, 회원가입 불필요."
+    />
+    <meta property="og:type" content="website" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "TOOLBOX",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0" }
+      }
+    </script>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div id="app" aria-live="polite"></div>
+    <noscript>
+      TOOLBOX의 도구는 JavaScript가 필요합니다. 각 도구의 설명·지원 포맷·개인정보
+      처리 방식은 JavaScript 없이도 확인할 수 있도록 정적 섹션으로 제공됩니다.
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

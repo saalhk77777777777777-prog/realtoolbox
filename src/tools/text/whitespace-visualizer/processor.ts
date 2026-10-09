@@ -1,0 +1,2 @@
+/** TOOLBOX v0.10.0 — Whitespace Visualizer */
+import type {ToolError}from"../../../core/types.ts";export function validate(input:unknown):ToolError|null{const v=input as {text?:unknown}|null;if(!v||typeof v.text!=="string")return {code:"USER_INPUT",what:"텍스트 입력이 필요합니다.",why:"문자열이 필요합니다.",how:"텍스트를 입력하세요."};return null}export async function process(input:{text:string}){return {text:input.text.replace(/ /g,"·").replace(/\t/g,"→").replace(/\r?\n/g,"↵\n")}}

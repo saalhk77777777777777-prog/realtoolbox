@@ -1,0 +1,5 @@
+/** TOOLBOX v0.11.0 — Query String Builder — URL 파라미터 생성 manifest */
+import type { ToolManifest } from "../../../core/types.ts";
+import { registerTool } from "../../../core/toolRegistry.ts";
+export const querystringbuilderManifest: ToolManifest = { id:"query-string-builder", version: "0.13.3", title:"Query String Builder — URL 파라미터 생성", slug:"query-string-builder", category:"developer", description:"키와 값을 입력해 URL query string을 생성합니다.", keywords:["query", "string", "url", "params", "parameter", "URL", "파라미터"], aliases:["query", "string", "url"], inputTypes:["text"], outputTypes:["text"], localProcessing:true, relatedTools:[], load:async()=>{const [processor,ui]=await Promise.all([import("./processor.ts"),import("./ui.ts")]);return {manifest:{...querystringbuilderManifest,load:undefined as never},validate:processor.validate,process:async(input,ctx)=>{if(ctx.signal.aborted)throw new Error("cancelled");return processor.process(input as never)},render:ui.render}}};
+export function registerQueryStringBuilder():void{registerTool(querystringbuilderManifest)}

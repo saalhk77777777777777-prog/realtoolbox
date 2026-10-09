@@ -1,0 +1,33 @@
+{
+  "name": "toolbox",
+  "version": "0.14.65",
+  "private": true,
+  "description": "TOOLBOX — Local-first universal web workspace",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run sitemap:generate && tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run --maxWorkers=2",
+    "typecheck": "tsc --noEmit",
+    "preflight:adsense": "npm run sitemap:generate && tsx scripts/preflight-adsense.ts",
+    "sitemap:generate": "tsx scripts/generate-sitemap.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "jpeg-js": "^0.4.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.0",
+    "vitest": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.3.289"
+  }
+}

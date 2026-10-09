@@ -1,0 +1,5 @@
+/** TOOLBOX v0.14.0 — image-blur processor */
+import type { ToolError } from "../../../core/types.ts";
+export interface Input{file:File;radius:number} export interface Output{blob:Blob;width:number;height:number;radius:number}
+export function validate(input:unknown):ToolError|null{const v=input as Partial<Input>|null;if(!v||!(v.file instanceof File)||typeof v.radius!=="number")return {code:"USER_INPUT",what:"이미지와 블러 강도가 필요합니다.",why:"입력 형식이 잘못되었습니다.",how:"이미지와 0~20 사이 강도를 입력하세요."};if(!Number.isFinite(v.radius)||v.radius<0||v.radius>20)return {code:"USER_INPUT",what:"블러 강도는 0~20입니다.",why:`현재 ${v.radius}입니다.`,how:"0~20 사이 값을 입력하세요."};return null}
+export async function process(input:Input):Promise<Output>{const b=await createImageBitmap(input.file);try{const c=document.createElement("canvas");c.width=b.width;c.height=b.height;const x=c.getContext("2d");if(!x)throw new Error("Canvas unavailable");x.filter=`blur(${input.radius}px)`;x.drawImage(b,0,0);const blob=await new Promise<Blob>((r,j)=>c.toBlob(v=>v?r(v):j(new Error("toBlob failed")),"image/png"));return {blob,width:b.width,height:b.height,radius:input.radius}}finally{b.close?.()}}

@@ -1,0 +1,2 @@
+/** TOOLBOX v0.10.0 — Number Extractor */
+import type {ToolError} from "../../../core/types.ts";export function validate(input:unknown):ToolError|null{const v=input as {text?:unknown}|null;if(!v||typeof v.text!=="string"||!v.text.trim())return {code:"USER_INPUT",what:"텍스트 입력이 필요합니다.",why:"입력이 비어 있습니다.",how:"숫자가 포함된 텍스트를 입력하세요."};return null}export async function process(input:{text:string}){return {text:(input.text.match(/[-+]?(?:\d+(?:\.\d+)?|\.\d+)/g)||[]).join("\n")}}

@@ -1,0 +1,2 @@
+/** TOOLBOX v0.10.0 — URL Extractor */
+import type {ToolError}from"../../../core/types.ts";export function validate(input:unknown):ToolError|null{const v=input as {text?:unknown}|null;if(!v||typeof v.text!=="string"||!v.text.trim())return {code:"USER_INPUT",what:"텍스트 입력이 필요합니다.",why:"입력이 비어 있습니다.",how:"URL이 포함된 텍스트를 입력하세요."};return null}export async function process(input:{text:string}){const found=input.text.match(/https?:\/\/[^\s<>()"']+/gi)||[];return {text:[...new Set(found)].join("\n")}}
