@@ -1,5 +1,5 @@
 /**
- * TOOLBOX v0.8.0 — SEO helper (§07, §113.18)
+ * TOOLBOX v0.14.66 — SEO helper with project base path (§07, §113.18)
  * 각 public page에 unique title/description/canonical/H1 제공.
  */
 export interface PageMeta {
@@ -24,5 +24,7 @@ export function applyMeta(meta: PageMeta): void {
     canon.setAttribute("rel", "canonical");
     document.head.appendChild(canon);
   }
-  canon.setAttribute("href", meta.canonical);
+  const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const path = meta.canonical.startsWith("/") ? meta.canonical : `/${meta.canonical}`;
+  canon.setAttribute("href", `${window.location.origin}${basePath}${path === "/" ? "/" : path}`);
 }

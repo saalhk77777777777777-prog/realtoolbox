@@ -1,7 +1,7 @@
 {
   "name": "TOOLBOX",
   "short_name": "TOOLBOX",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
-  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+  "icons": [{ "src": "./favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
 }

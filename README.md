@@ -1,10 +1,10 @@
-# TOOLBOX v0.14.65
+# TOOLBOX v0.14.66
 
 Local-first 범용 웹 작업공간. 파일·이미지·PDF·데이터·텍스트 작업을 브라우저에서 처리하는 정적 웹앱입니다.
 
 ## 배포 전 확인
 
-- 앱 버전: **v0.14.65**
+- 앱 버전: **v0.14.66**
 - 도구 manifest: **101개**
 - 테스트: `npm test`
 - TypeScript 검사: `npm run typecheck`
@@ -30,7 +30,7 @@ npm run preflight:adsense
 npm run preview
 ```
 
-GitHub Pages 배포는 `.github/workflows/deploy-pages.yml`가 담당합니다. 현재 GitHub 계정의 루트 사이트 저장소 이름인 `<username>.github.io`를 사용하면 사이트 주소는 `https://<username>.github.io`가 됩니다. 워크플로는 `main` 브랜치 push 또는 수동 실행 시 typecheck → 전체 테스트 → preflight → build → Pages 배포를 수행합니다. GitHub 저장소의 Settings → Pages에서 Build and deployment source를 **GitHub Actions**로 설정해야 합니다. 기존 Netlify 설정은 보존되어 있습니다.
+GitHub Pages 배포는 `.github/workflows/deploy-pages.yml`가 담당합니다. 현재 저장소 이름이 `TOOLBOX`이므로 프로젝트 사이트 주소는 `https://<username>.github.io/TOOLBOX/`입니다. 워크플로는 `main` 브랜치 push 또는 수동 실행 시 typecheck → 전체 테스트 → preflight → build → Pages 배포를 수행합니다. GitHub 저장소의 Settings → Pages에서 Build and deployment source를 **GitHub Actions**로 설정해야 합니다. 기존 Netlify 설정은 보존되어 있습니다.
 
 ## 개발 원칙
 

@@ -1,3 +1,9 @@
+## v0.14.66 — GitHub Pages Project Path Support
+- Configured Vite for the existing `TOOLBOX` repository path (`/TOOLBOX/`) rather than assuming a user-site root.
+- Updated in-app links, client-side routing, canonical URLs, sitemap/robots paths, manifest assets, the Tabi Easter-egg asset, and 404 recovery for project-site deployment.
+- Updated GitHub Actions to build and publish with the correct repository subpath.
+- Kept existing Netlify configuration and all tools intact.
+
 ## v0.14.65 — GitHub Pages Deployment Preparation
 - Added a GitHub Actions workflow that runs typecheck, all tests, deployment preflight, production build, and GitHub Pages deployment on pushes to `main`.
 - Added the GitHub Pages `404.html` route-recovery fallback and client-side restoration for deep links.

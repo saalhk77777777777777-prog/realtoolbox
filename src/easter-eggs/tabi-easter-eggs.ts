@@ -3,8 +3,8 @@
  */
 const STORAGE_KEY = "toolbox:tabi-easter-eggs:v1";
 const SKY_BLUE = "#7fd0ff";
-const TABI_REWARD_PHOTO = "/images/tabi/cute-tabi.png";
-const TABI_FALLBACK_ART = "/tabi-easter-egg.svg";
+const TABI_REWARD_PHOTO = `${import.meta.env.BASE_URL}images/tabi/cute-tabi.png`;
+const TABI_FALLBACK_ART = `${import.meta.env.BASE_URL}tabi-easter-egg.svg`;
 const NO_MEANING_STEPS: ReadonlyArray<{ clicks: number; message: string }> = [
   { clicks: 10, message: "아무 의미 없다니깐요" },
   { clicks: 30, message: "계속할 거예요?" },
@@ -62,8 +62,9 @@ function ensureModal(): HTMLDivElement {
   modal.setAttribute("role", "dialog");
   modal.setAttribute("aria-modal", "true");
   modal.setAttribute("aria-labelledby", "tabi-egg-title");
-  modal.innerHTML = '<section class="tabi-egg-dialog"><button class="tabi-egg-close" type="button" aria-label="닫기">×</button><div class="tabi-egg-eyebrow">TABI\'S SECRET EXPEDITION</div><div class="tabi-egg-art"><img data-tabi-reward-image src="/tabi-easter-egg.svg" alt="하늘색 양갈래 머리와 고글, 탐험가 장비를 착용한 귀여운 타비 스타일의 치비 일러스트"></div><h2 id="tabi-egg-title">타비의 비밀 탐험일지</h2><p class="tabi-egg-message"></p><div class="tabi-egg-count"></div><button class="tabi-egg-primary" type="button">계속 탐험하기</button><a class="tabi-egg-primary tabi-egg-confirm-link" href="https://chzzk.naver.com/a6c4ddb09cdb160478996007bff35296" hidden>확인</a><p class="tabi-egg-real-confirm" hidden><u>진짜 확인버튼</u></p></section>';
+  modal.innerHTML = '<section class="tabi-egg-dialog"><button class="tabi-egg-close" type="button" aria-label="닫기">×</button><div class="tabi-egg-eyebrow">TABI\'S SECRET EXPEDITION</div><div class="tabi-egg-art"><img data-tabi-reward-image src="" alt="하늘색 양갈래 머리와 고글, 탐험가 장비를 착용한 귀여운 타비 스타일의 치비 일러스트"></div><h2 id="tabi-egg-title">타비의 비밀 탐험일지</h2><p class="tabi-egg-message"></p><div class="tabi-egg-count"></div><button class="tabi-egg-primary" type="button">계속 탐험하기</button><a class="tabi-egg-primary tabi-egg-confirm-link" href="https://chzzk.naver.com/a6c4ddb09cdb160478996007bff35296" hidden>확인</a><p class="tabi-egg-real-confirm" hidden><u>진짜 확인버튼</u></p></section>';
   const rewardImage = modal.querySelector<HTMLImageElement>("[data-tabi-reward-image]")!;
+  rewardImage.src = TABI_REWARD_PHOTO;
   rewardImage.addEventListener("error", () => {
     if (rewardImage.getAttribute("src") !== TABI_FALLBACK_ART) rewardImage.src = TABI_FALLBACK_ART;
   });

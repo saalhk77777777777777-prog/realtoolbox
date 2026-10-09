@@ -210,6 +210,9 @@ registerSentenceCounter();
 registerWordFrequencyAnalyzer();
 
 const app = document.getElementById("app")!;
+const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
+const appPath = (path: string) => path.startsWith(BASE_PATH + "/") || path === BASE_PATH ? (path.slice(BASE_PATH.length) || "/") : path;
+const publicPath = (path: string) => `${BASE_PATH}${path.startsWith("/") ? path : `/${path}`}`;
 const CATEGORY_META: Record<string, { label: string; icon: string }> = {
   file: { label: "파일", icon: "▣" }, image: { label: "이미지", icon: "◈" }, pdf: { label: "PDF", icon: "▤" },
   data: { label: "데이터", icon: "◆" }, developer: { label: "개발자", icon: "⌘" }, text: { label: "텍스트", icon: "T" }, utility: { label: "유틸리티", icon: "⚙" },
@@ -286,7 +289,8 @@ function bindWorkspace(): void {
 }
 
 export function navigate(path: string): void {
-  history.pushState({}, "", path);
+  const target = path.startsWith(BASE_PATH + "/") || path === BASE_PATH ? path : publicPath(path);
+  history.pushState({}, "", target);
   render();
 }
 
@@ -328,7 +332,7 @@ async function toolView(slug: string): Promise<string> {
 }
 
 export async function render(): Promise<void> {
-  const path = location.pathname;
+  const path = appPath(location.pathname);
   let inner = "";
   if (path === "/") {
     applyMeta({
@@ -357,7 +361,8 @@ export async function render(): Promise<void> {
   } else {
     inner = staticView("404", `<p>페이지를 찾을 수 없습니다. <a href="/" data-link>홈으로</a></p>`);
   }
-  app.innerHTML = shell(inner);
+  const html = BASE_PATH ? shell(inner).replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_PATH}/`) : shell(inner);
+  app.innerHTML = html;
   bindGlobal();
   bindWorkspace();
   installTabiEasterEggs();
@@ -391,7 +396,7 @@ export async function render(): Promise<void> {
   };
 }
 
-// TOOLBOX v0.14.65 — Restore client-side routes after GitHub Pages 404 fallback.
+// TOOLBOX v0.14.66 — GitHub Pages project-path-aware navigation.
 try {
   const redirectedPath = sessionStorage.getItem("toolbox:github-pages-redirect");
   if (redirectedPath) {

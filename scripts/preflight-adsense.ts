@@ -1,5 +1,5 @@
 /**
- * TOOLBOX v0.14.65 — Deployment/SEO preflight.
+ * TOOLBOX v0.14.66 — Deployment/SEO preflight with project base path.
  * Checks deployment prerequisites; it does not guarantee AdSense approval.
  */
 import { readFileSync, readdirSync } from "node:fs";
@@ -38,9 +38,12 @@ const main = read("src/main.ts");
 const sitemap = read("public/sitemap.xml");
 const robots = read("public/robots.txt");
 const appVersion = versionSource.match(/APP_VERSION\s*=\s*"([^"]+)"/)?.[1];
+const basePath = (process.env.VITE_BASE_PATH || "/").replace(/\/+$/, "");
 const routeFromLoc = (loc: string) => {
-  try { return new URL(loc, "https://toolbox.invalid").pathname; }
-  catch { return loc; }
+  try {
+    const path = new URL(loc, "https://toolbox.invalid").pathname;
+    return basePath && path.startsWith(basePath + "/") ? path.slice(basePath.length) || "/" : path;
+  } catch { return loc; }
 };
 
 check("version-sync", appVersion === packageJson.version, `package.json=${packageJson.version}, APP_VERSION=${appVersion ?? "missing"}`);

@@ -1,9 +1,11 @@
 import { defineConfig } from "vite";
 
 const siteUrl = (process.env.SITE_URL || process.env.URL || process.env.DEPLOY_PRIME_URL || "").trim().replace(/\/+$/, "");
+const basePath = process.env.VITE_BASE_PATH || "/";
 
-// TOOLBOX v0.14.65 — deployment-aware canonical URL and static-first build
+// TOOLBOX v0.14.66 — GitHub Pages project path and deployment-aware canonical URL
 export default defineConfig({
+  base: basePath.endsWith("/") ? basePath : `${basePath}/`,
   plugins: [{
     name: "toolbox-deployment-canonical",
     transformIndexHtml(html) {
