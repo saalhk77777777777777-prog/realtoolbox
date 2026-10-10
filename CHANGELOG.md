@@ -1,3 +1,8 @@
+## v0.14.69 — 2026-10-10 — Naver Search Advisor verification
+- Added the user-provided Naver site-verification HTML file at `public/naver232c2a95c11a1eb42171c442f76609be.html` so Vite copies it to the deployed site root.
+- Preserved the verification filename and token exactly as provided.
+- No application UI or tool behavior changed.
+
 ## v0.14.68 — 2026-10-10 — Google Search Console verification
 - Added the exact Google-provided verification file at `public/google66bb344ab51b92b5.html` so the build publishes it at the site root.
 - Kept the original verification token and filename unchanged.
