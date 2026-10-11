@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.61 — Video to Animated WebP validation tests */
+/** TOOLBOX v0.14.70 — Video to Animated WebP validation tests */
 import { describe, expect, it } from "vitest";
 import { MAX_VIDEO_BYTES, validateVideoToWebP, type VideoToWebPOptions } from "../src/tools/image/video-to-webp/processor.ts";
 
@@ -19,7 +19,7 @@ function makeVideo(overrides: Partial<File> = {}): File {
   } as File;
 }
 
-describe("video-to-webp validation — v0.14.61", () => {
+describe("video-to-webp validation — v0.14.70", () => {
   it("requires a selected video", () => {
     expect(validateVideoToWebP(null, validOptions)?.code).toBe("USER_INPUT");
   });

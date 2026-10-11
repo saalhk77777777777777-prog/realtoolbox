@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.63 — Self-hosted FFmpeg core processor */
+/** TOOLBOX v0.14.70 — Fix self-hosted FFmpeg ESM core loading */
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
 import type { ToolError } from "../../../core/types.ts";
@@ -62,13 +62,19 @@ async function getFFmpeg(onStatus: (message: string) => void): Promise<FFmpeg> {
 
   loading = (async () => {
     onStatus("TOOLBOX에 포함된 변환 엔진을 불러오는 중입니다.");
-    // v0.14.63: FFmpeg 코어를 외부 CDN이 아닌 사이트 자체 정적 파일에서 불러옵니다.
+    // v0.14.70: ESM FFmpeg 코어를 외부 CDN이 아닌 사이트 자체 정적 파일에서 불러옵니다.
     const baseURL = `${import.meta.env.BASE_URL}ffmpeg`;
     const instance = new FFmpeg();
-    await instance.load({
-      coreURL: `${baseURL}/ffmpeg-core.js`,
-      wasmURL: `${baseURL}/ffmpeg-core.wasm`,
-    });
+    try {
+      await instance.load({
+        coreURL: `${baseURL}/ffmpeg-core.js`,
+        wasmURL: `${baseURL}/ffmpeg-core.wasm`,
+      });
+    } catch (error) {
+      instance.terminate();
+      const detail = error instanceof Error ? error.message : String(error);
+      throw new Error(`변환 엔진을 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요. 문제가 계속되면 브라우저 콘솔에서 엔진 파일 요청 오류를 확인해 주세요. (원인: ${detail})`);
+    }
     ffmpeg = instance;
     return instance;
   })();

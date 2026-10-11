@@ -1,3 +1,10 @@
+## v0.14.70 — 2026-10-11 — Fix video-to-WebP engine loading
+- Fixed the FFmpeg core format mismatch: the module worker dynamically imports the core as an ES module, so the self-hosted core file now uses the ESM build rather than the UMD build.
+- Kept the existing self-hosted WASM engine and paths; no external CDN is required for the engine.
+- Added a clearer Korean engine-load error with the underlying cause for troubleshooting.
+- Updated the UI privacy/help text to accurately describe the first-run ~31 MB local engine download.
+- Validation: `npm run build` passed; `tests/video-to-webp.test.ts` passed (7/7); ESM core syntax check and `git diff --check` passed. Actual browser conversion and production deployment still need verification.
+
 ## v0.14.69 — 2026-10-10 — Naver Search Advisor verification
 - Added the user-provided Naver site-verification HTML file at `public/naver232c2a95c11a1eb42171c442f76609be.html` so Vite copies it to the deployed site root.
 - Preserved the verification filename and token exactly as provided.

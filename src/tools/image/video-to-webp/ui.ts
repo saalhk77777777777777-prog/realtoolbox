@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.61 — Video to Animated WebP UI */
+/** TOOLBOX v0.14.70 — Video to Animated WebP UI */
 import { downloadBlob } from "../../../core/downloadManager.ts";
 import { track } from "../../../analytics/analytics.ts";
 import { convertVideoToAnimatedWebP, MAX_VIDEO_BYTES, validateVideoToWebP, type VideoToWebPOptions, type VideoToWebPResult } from "./processor.ts";
@@ -35,7 +35,7 @@ export function renderVideoToWebP(mount: HTMLElement): void {
     <div id="vwp-result"></div>
     <section class="card" aria-label="사용법과 개인정보 안내">
       <h2>사용법</h2><ol><li>변환할 영상을 선택합니다.</li><li>시작 시간과 길이, FPS, 너비, 품질을 설정합니다.</li><li>WebP 만들기를 누르고 결과를 저장합니다.</li></ol>
-      <h2>개인정보</h2><p>선택한 영상은 서버로 업로드하지 않고 브라우저 안에서 변환합니다. 처음 사용할 때 변환 엔진 파일을 CDN에서 불러오므로 인터넷 연결이 필요합니다.</p>
+      <h2>개인정보</h2><p>선택한 영상은 서버로 업로드하지 않고 브라우저 안에서 변환합니다. 처음 사용할 때 사이트에 포함된 변환 엔진 파일(약 31MB)을 내려받으므로 인터넷 연결이 필요합니다.</p>
       <h2>알아둘 점</h2><ul><li>소리는 애니메이션 WebP에 포함되지 않습니다.</li><li>첫 변환은 엔진을 불러오는 시간 때문에 오래 걸릴 수 있습니다.</li><li>긴 영상이나 높은 해상도는 메모리를 많이 사용할 수 있습니다.</li></ul>
     </section>
   `;
