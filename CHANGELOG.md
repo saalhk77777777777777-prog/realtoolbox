@@ -1,3 +1,9 @@
+## v0.14.71 — 2026-10-16 — UI polish and custom branding
+- Replaced the plain T brand mark with a custom geometric toolbox symbol in the header and favicon.
+- Reduced excessive shadows and rounded surfaces; introduced a calmer slate/blue accent palette.
+- Added subtle content/card entrance motion and clearer hover/press feedback.
+- Preserved reduced-motion preferences and all existing tool functionality.
+
 ## v0.14.70 — 2026-10-11 — Fix video-to-WebP engine loading
 - Fixed the FFmpeg core format mismatch: the module worker dynamically imports the core as an ES module, so the self-hosted core file now uses the ESM build rather than the UMD build.
 - Kept the existing self-hosted WASM engine and paths; no external CDN is required for the engine.

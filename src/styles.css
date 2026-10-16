@@ -175,3 +175,35 @@ body{zoom:1.25}
 .feedback-dialog{position:relative;width:min(620px,100%);max-height:min(88vh,900px);overflow:auto;background:#fff;border:1px solid #e7e9ef;border-radius:22px;padding:30px;box-shadow:0 30px 100px rgba(12,16,40,.3)}
 .feedback-dialog h2{font-size:27px;letter-spacing:-.04em;margin:8px 32px 8px 0}.feedback-dialog>p{font-size:14px;color:var(--muted);margin:0 0 22px}.feedback-close{position:absolute;right:18px;top:18px;width:38px;height:38px;min-height:38px;padding:0;border:0;border-radius:10px;background:#f2f3f8;color:#454858;font-size:25px}.feedback-label{display:block;font-size:13px;font-weight:750;margin:15px 0 6px}.feedback-dialog textarea,.feedback-dialog input[type=email]{width:100%;min-height:42px;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font:inherit;font-size:14px;resize:vertical;background:#fbfbfd;color:var(--fg)}.feedback-dialog textarea:focus,.feedback-dialog input:focus{outline:3px solid var(--accent-weak);border-color:#bfc0f5}.feedback-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}.feedback-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}.feedback-actions button{font-size:14px;min-height:44px;padding:10px 15px}.feedback-actions button.secondary{background:#fff;color:var(--fg)}.feedback-actions button:disabled{opacity:.65;cursor:wait}.feedback-status{min-height:1px;margin:8px 0 0;font-size:13px;color:var(--ok)}.feedback-dialog form>small{display:block;color:var(--muted);font-size:11px;margin-top:10px}.feedback-open{overflow:hidden}.contact-card{max-width:680px;margin-top:18px;padding:26px;background:#fff;border:1px solid var(--border);border-radius:18px}.contact-card p{margin-top:0}.contact-mail-button{display:inline-flex;align-items:center;justify-content:center;margin:8px 0 16px;padding:12px 18px;border-radius:11px;background:var(--accent);color:#fff;text-decoration:none;font-weight:750}.contact-mail-button:hover{filter:brightness(.95)}.contact-card .muted{font-size:13px;margin-bottom:0}
 @media(max-width:640px){.feedback-overlay{padding:12px}.feedback-dialog{padding:24px 18px;border-radius:18px;max-height:92vh}.feedback-dialog h2{font-size:23px}.feedback-actions{flex-direction:column-reverse}.feedback-actions button{width:100%}}
+
+/* TOOLBOX v0.14.71 — quieter surfaces, intentional motion, and a custom toolbox mark */
+:root { --radius:10px; --accent:#4169a8; --accent-weak:#edf3fb; --bg:#f7f8fa; --border:#e5e8ed; }
+.top { background:rgba(250,251,252,.94); transition:background-color .22s ease,border-color .22s ease; }
+.top.scrolled { background:rgba(255,255,255,.97); border-bottom-color:#d9dee7; }
+.brand-mark { width:34px; height:34px; border-radius:9px; background:#24364b; color:#fff; }
+.brand-mark svg { display:block; width:25px; height:25px; }
+.global-search,.hero-search { border-radius:9px; box-shadow:none; }
+.global-search:focus-within { box-shadow:0 0 0 3px rgba(65,105,168,.12); }
+.hero { background:#fff; border-radius:14px; box-shadow:none; }
+.hero-orb { border-radius:14px; background:#edf3fb; color:#24364b; box-shadow:none; transform:none; }
+.hero-orb small { color:#68788d; }
+.tool-card { border-radius:10px; box-shadow:none; transition:border-color .18s ease,background-color .18s ease,transform .18s ease; }
+.tool-card:hover { transform:translateY(-1px); border-color:#b9c9df; box-shadow:0 5px 14px rgba(31,49,73,.045); }
+.tool-icon,.search-result-icon { border-radius:8px; background:#f0f3f7; color:#425d80; }
+.side-link { transition:color .16s ease,background-color .16s ease; }
+.side-link.active { background:#eaf0f8; color:#315b91; }
+.tool-mount,.card { border-radius:11px; box-shadow:none; }
+button,input[type="search"],input[type="text"],input[type="file"] { border-radius:9px; }
+button { transition:background-color .16s ease,border-color .16s ease,color .16s ease,transform .16s ease; }
+button:active { transform:translateY(1px); }
+[data-link] { scroll-margin-top:88px; }
+@media (prefers-reduced-motion:no-preference) {
+ .workspace-main { animation:toolbox-enter .24s ease-out both; }
+ .tool-page { animation:toolbox-enter .2s ease-out both; }
+ .tool-card { animation:toolbox-card-enter .28s ease-out both; }
+ .tool-card:nth-child(2n) { animation-delay:18ms; }
+ .tool-card:nth-child(3n) { animation-delay:36ms; }
+ @keyframes toolbox-enter { from { opacity:.65; transform:translateY(5px); } to { opacity:1; transform:translateY(0); } }
+ @keyframes toolbox-card-enter { from { opacity:.7; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+}
+@media (prefers-reduced-motion:reduce) { .workspace-main,.tool-page,.tool-card { animation:none!important; } }

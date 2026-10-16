@@ -1,6 +1,6 @@
 {
   "name": "toolbox",
-  "version": "0.14.70",
+  "version": "0.14.71",
   "private": true,
   "description": "TOOLBOX — Local-first universal web workspace",
   "type": "module",
