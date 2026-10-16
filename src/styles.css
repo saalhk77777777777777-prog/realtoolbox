@@ -207,3 +207,63 @@ button:active { transform:translateY(1px); }
  @keyframes toolbox-card-enter { from { opacity:.7; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
 }
 @media (prefers-reduced-motion:reduce) { .workspace-main,.tool-page,.tool-card { animation:none!important; } }
+
+/* TOOLBOX v0.14.72 — accessible focus states, clearer tool hierarchy, and responsive polish */
+:root { --focus-ring: 0 0 0 3px rgba(65,105,168,.18); }
+:where(a,button,input,select,textarea,[tabindex]):focus-visible { outline:3px solid #7da4df; outline-offset:3px; }
+:where(a,button,input,select,textarea,[tabindex]):focus:not(:focus-visible) { outline:none; }
+.top { z-index:30; }
+.global-search { background:#f6f8fb; border-color:#e1e6ee; }
+.global-search:hover { border-color:#c7d2e2; }
+.global-search:focus-within { background:#fff; border-color:#8eacd9; box-shadow:var(--focus-ring); }
+.hero { position:relative; isolation:isolate; overflow:hidden; background:linear-gradient(112deg,#fff 0%,#fbfcff 63%,#f0f5fc 100%); border-color:#e2e8f0; }
+.hero::after { content:""; position:absolute; z-index:-1; width:250px; height:250px; right:-74px; bottom:-125px; border:1px solid rgba(65,105,168,.12); border-radius:50%; box-shadow:0 0 0 26px rgba(65,105,168,.025),0 0 0 54px rgba(65,105,168,.02); pointer-events:none; }
+.hero-orb { position:relative; z-index:1; border:1px solid #e1e9f5; }
+.hero-search { background:#fff; }
+.hero-search:focus-within { border-color:#8eacd9; box-shadow:var(--focus-ring); }
+.section-title { align-items:flex-end; gap:12px; }
+.section-title h2 { line-height:1.35; }
+.tool-card { background:rgba(255,255,255,.92); }
+.tool-card:focus-within { border-color:#9fb6d9; box-shadow:0 0 0 2px rgba(65,105,168,.08); }
+.tool-card-main { min-height:70px; }
+.tool-card-copy strong { line-height:1.45; }
+.tool-card-copy>span { line-height:1.55; }
+.favorite-btn { display:grid; place-items:center; }
+.favorite-btn:focus-visible { outline-offset:1px; }
+.search-popover { z-index:50; }
+.search-results a:focus-visible { outline-offset:-2px; background:#f2f6fc; }
+.page-heading { border-bottom:1px solid #e7eaf0; }
+.tool-heading { gap:18px; }
+.tool-meta { display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; }
+.tool-mount { min-width:0; }
+:where(.tool-mount,.card,.feedback-dialog) :where(label) { line-height:1.5; }
+:where(.tool-mount,.card) :where(input,select,textarea) { max-width:100%; }
+:where(.tool-mount,.card) :where(input[type="file"]) { padding:10px; background:#fbfcfe; }
+:where(.tool-mount,.card) :where(button) { font-weight:650; }
+:where(.tool-mount,.card) :where(button.secondary) { border-color:#dce2ea; }
+:where(.tool-mount,.card) :where(button:disabled) { opacity:.58; cursor:not-allowed; transform:none; }
+.empty-state { display:grid; justify-items:center; gap:5px; }
+.empty-state span { max-width:420px; }
+@media(max-width:900px) {
+ .workspace-layout { grid-template-columns:minmax(0,1fr); }
+ .sidebar { display:block; }
+ .sidebar-section { scrollbar-width:thin; }
+ .side-link { flex:0 0 auto; }
+ .hero { min-height:0; }
+}
+@media(max-width:640px) {
+ .top-inner { min-width:0; }
+ .brand { flex:0 0 auto; }
+ .global-search { min-width:0; }
+ .hero { gap:16px; }
+ .hero::after { width:150px; height:150px; right:-65px; bottom:-80px; }
+ .hero-orb { align-self:center; }
+ .section-title { align-items:flex-start; }
+ .view-note { display:none; }
+ .tool-card-main { min-height:66px; }
+ .tool-mount { overflow-wrap:anywhere; }
+ .feedback-dialog { width:100%; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .hero,.tool-card,.global-search,.hero-search { transition:none!important; }
+}
