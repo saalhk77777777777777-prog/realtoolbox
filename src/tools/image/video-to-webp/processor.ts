@@ -1,6 +1,6 @@
-/** TOOLBOX v0.14.70 — Fix self-hosted FFmpeg ESM core loading */
+/** TOOLBOX v0.14.74 — Reliable self-hosted FFmpeg core loading with Blob URL fallback */
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { fetchFile } from "@ffmpeg/util";
+import { fetchFile, toBlobURL } from "@ffmpeg/util";
 import type { ToolError } from "../../../core/types.ts";
 
 export interface VideoToWebPOptions {
@@ -61,31 +61,58 @@ async function getFFmpeg(onStatus: (message: string) => void): Promise<FFmpeg> {
   if (loading) return loading;
 
   loading = (async () => {
-    onStatus("TOOLBOX에 포함된 변환 엔진을 불러오는 중입니다.");
-    // v0.14.70: ESM FFmpeg 코어를 외부 CDN이 아닌 사이트 자체 정적 파일에서 불러옵니다.
-    const baseURL = `${import.meta.env.BASE_URL}ffmpeg`;
-    const instance = new FFmpeg();
+    onStatus("변환 엔진 파일을 확인하는 중입니다.");
+    const basePath = `${import.meta.env.BASE_URL}ffmpeg/`;
+    const baseURL = new URL(basePath, window.location.origin);
+    const coreAssetURL = new URL("ffmpeg-core.js", baseURL).href;
+    const wasmAssetURL = new URL("ffmpeg-core.wasm", baseURL).href;
+    let instance = new FFmpeg();
+    let coreBlobURL: string | null = null;
+    let wasmBlobURL: string | null = null;
+
     try {
-      await instance.load({
-        coreURL: `${baseURL}/ffmpeg-core.js`,
-        wasmURL: `${baseURL}/ffmpeg-core.wasm`,
-      });
+      // Blob URLs avoid MIME/CORS edge cases on static hosts. If a browser blocks
+      // Blob modules, retry once with the same-origin static files directly.
+      onStatus("변환 엔진을 준비하는 중입니다. 처음에는 잠시 걸릴 수 있어요.");
+      try {
+        coreBlobURL = await toBlobURL(coreAssetURL, "text/javascript");
+        wasmBlobURL = await toBlobURL(wasmAssetURL, "application/wasm");
+        await instance.load({ coreURL: coreBlobURL, wasmURL: wasmBlobURL });
+      } catch (blobError) {
+        instance.terminate();
+        if (coreBlobURL) URL.revokeObjectURL(coreBlobURL);
+        if (wasmBlobURL) URL.revokeObjectURL(wasmBlobURL);
+        coreBlobURL = null;
+        wasmBlobURL = null;
+        onStatus("대체 방식으로 변환 엔진을 불러오는 중입니다.");
+        instance = new FFmpeg();
+        try {
+          await instance.load({ coreURL: coreAssetURL, wasmURL: wasmAssetURL });
+        } catch (directError) {
+          const blobMessage = blobError instanceof Error ? blobError.message : String(blobError);
+          const directMessage = directError instanceof Error ? directError.message : String(directError);
+          throw new Error(`Blob 방식: ${blobMessage}; 직접 로드 방식: ${directMessage}`);
+        }
+      }
+      ffmpeg = instance;
+      return instance;
     } catch (error) {
       instance.terminate();
       const detail = error instanceof Error ? error.message : String(error);
-      throw new Error(`변환 엔진을 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요. 문제가 계속되면 브라우저 콘솔에서 엔진 파일 요청 오류를 확인해 주세요. (원인: ${detail})`);
+      throw new Error(`변환 엔진을 불러오지 못했습니다. 인터넷 연결과 엔진 파일 요청을 확인한 뒤 다시 시도해 주세요. (원인: ${detail})`);
+    } finally {
+      if (coreBlobURL) URL.revokeObjectURL(coreBlobURL);
+      if (wasmBlobURL) URL.revokeObjectURL(wasmBlobURL);
     }
-    ffmpeg = instance;
-    return instance;
   })();
 
   try {
     return await loading;
   } finally {
+    // Clear rejected promises too, so a retry can create a fresh worker.
     loading = null;
   }
 }
-
 export async function convertVideoToAnimatedWebP(
   file: File,
   options: VideoToWebPOptions,

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { getNoMeaningState } from "../src/easter-eggs/tabi-easter-eggs.ts";
 
-describe("TOOLBOX v0.14.53 — Tabi Easter Egg click progression", () => {
+describe("TOOLBOX v0.14.74 — Tabi Easter Egg click progression", () => {
   it("starts as a completely meaningless button", () => {
     expect(getNoMeaningState(0)).toEqual({
       clicks: 0,

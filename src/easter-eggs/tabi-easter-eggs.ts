@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.56 — Persistent Tabi Reward + Chzzk Confirm Link
+/** TOOLBOX v0.14.74 — Tabi keyword opens the existing photo reward
  * Local-only secrets. No analytics, network calls, or user-input collection.
  */
 const STORAGE_KEY = "toolbox:tabi-easter-eggs:v1";
@@ -147,18 +147,14 @@ export function installTabiEasterEggs(): void {
     if (button) {
       event.preventDefault();
       if (progress.noMeaningClicks >= 66) {
-        button.textContent = "(더 이상 눌러봤자 의미가 없음)";
-        button.disabled = true;
+        showEgg("개귀여운 타비 사진", "찾아냈다! 💙", "no-meaning-66", true);
         return;
       }
       progress.noMeaningClicks = Math.min(66, progress.noMeaningClicks + 1);
       saveProgress(progress);
       const state = getNoMeaningState(progress.noMeaningClicks);
-      button.textContent = state.finished ? "개귀여운 타비 사진 발견!!" : "아무 의미 없는 버튼 · " + state.clicks + "/66";
-      button.setAttribute("aria-label", "아무 의미 없는 버튼, " + state.clicks + "번 클릭");
       const step = NO_MEANING_STEPS.find((item) => item.clicks === state.clicks);
       if (state.finished) {
-        button.disabled = true;
         showEgg("개귀여운 타비 사진", "66번이나 눌렀으니까 특별히 보여주는 거예요! …근데 진짜 왜 눌렀어요?", "no-meaning-66", true);
       } else if (step) showToast(step.message);
       return;
@@ -191,11 +187,11 @@ export function installTabiEasterEggs(): void {
       konamiIndex = 0;
       showEgg("비밀 코드 성공!", "개발자도 모르게 숨겨둔 탐험가 코드예요. 역시 눈썰미가 좋네요!", "konami");
     }
-    if (key.length === 1 && /[a-z]/i.test(key)) {
+    if (key.length === 1 && /[a-z]/i.test(key) && !(event.target instanceof HTMLInputElement && event.target.matches("#gs, [data-hero-search]"))) {
       typed = (typed + key).slice(-4);
       if (typed === "tabi") {
         typed = "";
-        showEgg("타비 발견!", "이름을 입력했더니 진짜 나타났어요. 우연… 맞겠죠?", "typed-tabi");
+        showEgg("개귀여운 타비 사진", "찾아냈다! 💙", "no-meaning-66", true);
       }
     }
   });
@@ -209,15 +205,13 @@ export function installTabiEasterEggs(): void {
       showToast("하늘색 신호 확인! 타비의 색을 알아냈어요 💙");
     } else if (query === "101번째 도구" || query === "101st tool") {
       showEgg("숨겨진 101번째 도구", "이 도구는 목록에 없어요. 진짜 도구는… 바로 이 비밀을 찾아낸 당신!", "tool-101");
-    } else if (query === "타비" || query === "tabi") {
+    } else if (query === "tabi") {
+      showEgg("개귀여운 타비 사진", "찾아냈다! 💙", "no-meaning-66", true);
+    } else if (query === "타비") {
       showToast("검색 결과 말고도… 타비가 어딘가에 숨어 있을지도? 🧭");
     }
   });
 
-  {
-    const button = document.querySelector<HTMLButtonElement>("[data-tabi-no-meaning]");
-    if (button && progress.noMeaningClicks >= 66) { button.textContent = "(더 이상 눌러봤자 의미가 없음)"; button.disabled = true; }
-    else if (button && progress.noMeaningClicks > 0) button.textContent = "아무 의미 없는 버튼 · " + progress.noMeaningClicks + "/66";
-  }
+  // Keep the footer button visually meaningless: never append counters or change its label.
 }
 export const TABI_EASTER_EGG_IDS = ["no-meaning-66", "brand-triple", "footer-triple", "konami", "typed-tabi", "tool-101"] as const;

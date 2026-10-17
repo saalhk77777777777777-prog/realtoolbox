@@ -1,7 +1,7 @@
 @echo off
 setlocal
 chcp 65001 >nul
-title TOOLBOX v0.14.73 - Build and Deploy
+title TOOLBOX v0.14.74 - Build and Deploy
 
 cd /d "%~dp0"
 if errorlevel 1 goto :fail
@@ -27,15 +27,15 @@ call npm run build
 if errorlevel 1 goto :fail
 
 echo.
-echo [5/5] 올바른 저장소(realtoolbox)로 배포...
-git add netlify.toml package.json package-lock.json src/version.ts CHANGELOG.md "배포.bat"
+echo [5/5] 변경 파일 전체 커밋 및 배포 저장소(realtoolbox) 푸시...
+git add -A
 if errorlevel 1 goto :fail
 
 git diff --cached --quiet
 if not errorlevel 1 (
-  echo 변경된 배포 파일이 없습니다.
+  echo 변경된 파일이 없습니다.
 ) else (
-  git commit -m "fix(v0.14.73): repair Netlify deep-link routing"
+  git commit -m "feat(v0.14.74): polish UI and stabilize WebP loading"
   if errorlevel 1 goto :fail
 )
 
@@ -44,7 +44,7 @@ if errorlevel 1 goto :fail
 
 echo.
 echo 배포 요청 완료! Netlify 자동 배포 상태를 확인하세요:
-echo https://app.netlify.com/
+echo https://app.netlify.com/projects/toolboxbox
 echo 사이트: https://toolboxbox.netlify.app/
 echo.
 pause

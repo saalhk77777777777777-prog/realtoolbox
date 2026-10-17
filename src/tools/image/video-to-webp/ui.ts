@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.70 — Video to Animated WebP UI */
+/** TOOLBOX v0.14.74 — Safer video selection and engine-load feedback */
 import { downloadBlob } from "../../../core/downloadManager.ts";
 import { track } from "../../../analytics/analytics.ts";
 import { convertVideoToAnimatedWebP, MAX_VIDEO_BYTES, validateVideoToWebP, type VideoToWebPOptions, type VideoToWebPResult } from "./processor.ts";
@@ -69,7 +69,10 @@ export function renderVideoToWebP(mount: HTMLElement): void {
   const setFile = (selected: File | null) => {
     if (busy) return;
     if (inputURL) URL.revokeObjectURL(inputURL);
+    if (outputURL) URL.revokeObjectURL(outputURL);
     inputURL = null;
+    outputURL = null;
+    result.innerHTML = "";
     file = selected;
     sourceDuration = 0;
     preview.removeAttribute("src");
@@ -96,6 +99,12 @@ export function renderVideoToWebP(mount: HTMLElement): void {
       const maxStart = Math.max(0, sourceDuration - 0.5);
       startInput.max = String(Math.floor(maxStart * 10) / 10);
       if (Number(startInput.value) > maxStart) startInput.value = "0";
+      setStatus("영상 준비 완료. 변환 설정을 확인해 주세요.");
+    };
+    preview.onerror = () => {
+      sourceDuration = 0;
+      fileInfo.textContent = `${file?.name ?? "영상"} · ${formatBytes(file?.size ?? 0)} · 브라우저 미리보기 지원 여부를 확인할 수 없음`;
+      setStatus("브라우저 미리보기는 실패했지만, 변환 엔진이 읽을 수 있는 형식이면 변환을 시도할 수 있습니다.");
     };
   };
 
