@@ -1,3 +1,28 @@
+## v0.14.79 — 2026-10-17 — APK visual preview, ZIP/Unity archive explorer, AdSense integration
+- Added a phone-shaped home-screen preview and best-effort app icon discovery from image resources in APKs.
+- Added APK image resource selection and browser-local preview for common raster image types.
+- Added a generic ZIP-based archive explorer for ZIP-compatible OBB/AAB/archive exports, including filtered file list, text/image preview, resource replacement, and modified ZIP export.
+- Explicitly identifies unsupported UnityFS/native Unity bundle formats instead of claiming universal Unity extraction.
+- Added opt-in AdSense Auto ads loader, gated behind a valid `VITE_ADSENSE_CLIENT_ID`; no publisher ID is hardcoded.
+- Expanded privacy copy for the potential use of Google advertising cookies/technologies and added `ADSENSE_SETUP.md`.
+- APK output remains unsigned and the phone mock is not a runtime emulator.
+- Version: `0.14.79`.
+
+## v0.14.78 — 2026-10-17 — APK Editor Manifest editing and resource safety
+- Added editable package name, versionName, and versionCode for plain-text XML AndroidManifest.xml files; values are validated and XML-escaped before being queued as a replacement.
+- Binary AndroidManifest AXML remains read-only; no binary XML compiler, APK signing, or ZIP alignment is claimed.
+- Added ZIP metadata-based decompressed-size guardrails (128 MiB per entry, 512 MiB total) and 128 MiB replacement-file limit.
+- Clarified that ZIP size metadata is a defensive heuristic, not complete malicious-archive detection.
+- Added tests for text-manifest edits, XML escaping, and invalid values.
+- Version: `0.14.78`.
+
+## v0.14.77 — 2026-10-17 — Browser-local APK Editor MVP
+- Added APK ZIP structure inspection, basic text-manifest metadata extraction, best-effort binary-manifest string inspection, DEX header/string analysis, and resource-file replacement.
+- All selected APK contents are processed locally in the browser; APK size limit is 200 MiB.
+- Export rebuilds an unsigned ZIP package and removes stale JAR signature files. AndroidManifest binary editing/compilation, DEX decompilation, APK v2/v3 signing, and ZIP alignment are explicitly not supported in this browser-only MVP.
+- Added focused processor tests and JSZip dependency.
+- Version: `0.14.77`.
+
 ## v0.14.76 — 2026-10-17 — SEO keyword improvements
 - Updated homepage title and description to naturally target free online tools, file conversion, image compression, PDF, JSON, CSV, text, and developer tools.
 - Added per-page keyword metadata derived from each tool's title, manifest keywords, and category.
@@ -639,3 +664,8 @@ PDF 도구 6개는 이전에 "validator만 통과하는 껍데기"였다. 정규
 - Tests: tests/basic.test.ts (empty/minimum/normal/mismatch/unicode/no-ext/registry/search)
 - Known limitations: Image/PDF/Data/Developer suites 미구현, pipeline engine 미구현, PWA 미구현, preflight:adsense 미구현 (다음 Atomic Task)
 - Rollback: git checkpoint v0.1.0-toolbox-foundation
+
+## v0.14.80 — 2026-10-17 — AdSense ads.txt seller verification
+- Added `public/ads.txt` with the exact seller line supplied by the site owner: `google.com, pub-2603754934068938, DIRECT, f08c47fec0942fa0`.
+- Updated AdSense setup documentation and deployment script to v0.14.80.
+- This file does not indicate AdSense approval or guarantee ad delivery; verify the deployed `/ads.txt` URL and site status in AdSense.

@@ -1,2 +1,2 @@
-/** TOOLBOX v0.14.76 — SEO keyword and metadata improvements */
-export const APP_VERSION = "0.14.76";
+/** TOOLBOX v0.14.80 — AdSense seller verification file */
+export const APP_VERSION = "0.14.80";

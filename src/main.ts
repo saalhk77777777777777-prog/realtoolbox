@@ -1,5 +1,6 @@
 /** TOOLBOX v0.14.75 — remove homepage hero panel */
 import { APP_VERSION } from "./version.ts";
+import { installAdsense } from "./adsense.ts";
 import { installTabiEasterEggs } from "./easter-eggs/tabi-easter-eggs.ts";
 import { registerFileSizeChecker } from "./tools/file/file-size-checker/manifest.ts";
 import { registerFileNameAnalyzer } from "./tools/file/file-name-analyzer/manifest.ts";
@@ -12,6 +13,7 @@ import { registerFileEntropyAnalyzer } from "./tools/file/file-entropy-analyzer/
 import { registerFileContentPreviewer } from "./tools/file/file-content-previewer/manifest.ts";
 import { registerBatchFileZipCreator } from "./tools/file/batch-file-zip-creator/manifest.ts";
 import { registerZipInspector } from "./tools/file/zip-inspector/manifest.ts";
+import { registerApkEditor } from "./tools/file/apk-editor/manifest.ts";
 import { registerTextCounter } from "./tools/text/text-counter/manifest.ts";
 import { registerBase64 } from "./tools/developer/base64/manifest.ts";
 import { registerUrlCoder } from "./tools/developer/url-encoder/manifest.ts";
@@ -118,6 +120,7 @@ registerFileEntropyAnalyzer();
 registerFileContentPreviewer();
 registerBatchFileZipCreator();
 registerZipInspector();
+registerApkEditor();
 registerTextCounter();
 registerBase64();
 registerUrlCoder();
@@ -420,7 +423,7 @@ export async function render(): Promise<void> {
     inner = staticView("소개", `<p>TOOLBOX는 파일·이미지·PDF·데이터·텍스트 작업을 브라우저 하나에서 처리하는 Local-first 작업공간입니다.</p>`);
   } else if (path === "/privacy") {
     applyMeta({ title: "개인정보처리방침 | TOOLBOX", description: "TOOLBOX 개인정보 처리 및 로컬 처리 원칙.", canonical: "/privacy", h1: "개인정보" });
-    inner = staticView("개인정보처리방침 (v0.10.0 요약)", `<ul><li>로컬 처리 우선: File Size Checker는 파일을 서버로 전송하지 않습니다.</li><li>수집하지 않는 정보: 파일 내용, 파일명, 토큰, 비밀번호.</li><li>Analytics: 최소 사용 이벤트만 수집합니다.</li><li>문의: /contact 경로를 이용하세요.</li></ul>`);
+    inner = staticView("개인정보처리방침", `<ul><li>로컬 처리 우선: 지원 도구의 파일은 가능한 한 브라우저 안에서 처리하며, 파일 내용은 분석을 위해 서버로 전송하지 않습니다.</li><li>수집하지 않는 정보: 도구가 처리하는 파일 내용, 비밀번호, 토큰.</li><li>Analytics: 최소 사용 이벤트를 수집할 수 있습니다.</li><li>광고: Google AdSense를 활성화하면 Google 및 광고 파트너가 쿠키 또는 유사 기술을 사용해 광고를 제공·측정할 수 있습니다. 광고 개인 최적화와 데이터 사용은 Google 광고 설정 및 개인정보 정책을 확인하세요.</li><li>문의: /contact 경로를 이용하세요.</li></ul>`);
   } else if (path === "/terms") {
     applyMeta({ title: "이용약관 | TOOLBOX", description: "TOOLBOX 이용약관.", canonical: "/terms", h1: "이용약관" });
     inner = staticView("이용약관", `<p>도구 결과는 참고용이며, 중요한 파일은 원본을 보관하세요. 악성 파일 검사를 우회하는 용도로 사용하지 마세요.</p>`);
@@ -435,6 +438,7 @@ export async function render(): Promise<void> {
   bindGlobal();
   bindWorkspace();
   installFeedback();
+  installAdsense();
   installTabiEasterEggs();
 
   // mount tool UI

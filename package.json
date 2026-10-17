@@ -1,6 +1,6 @@
 {
   "name": "toolbox",
-  "version": "0.14.76",
+  "version": "0.14.80",
   "private": true,
   "description": "TOOLBOX — Local-first universal web workspace",
   "type": "module",
@@ -27,6 +27,7 @@
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
+    "jszip": "^3.10.1",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.3.289"
   }

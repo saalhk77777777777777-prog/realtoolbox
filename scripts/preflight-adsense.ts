@@ -72,6 +72,12 @@ const staticUiImports = manifests.filter((item) => /^import .*from "\.\/ui\.ts";
 check("static-processor-imports", staticProcessorImports === 0, `static processor imports=${staticProcessorImports}`);
 check("static-ui-imports", staticUiImports === 0, `static UI imports=${staticUiImports}`);
 
+const adsenseSource = read("src/adsense.ts");
+const adsenseDocs = read("ADSENSE_SETUP.md");
+check("adsense-loader-present", /installAdsense/.test(main) && /adsbygoogle\.js/.test(adsenseSource), "AdSense loader is integrated into the app shell");
+check("adsense-client-gated", /ca-pub-\\d\{16\}/.test(adsenseSource) && /VITE_ADSENSE_CLIENT_ID/.test(adsenseSource), "Ads only load when a valid publisher ID is configured");
+check("adsense-setup-doc", /VITE_ADSENSE_CLIENT_ID/.test(adsenseDocs) && /ads\.txt/.test(adsenseDocs), "Publisher ID, ads.txt, consent, and deploy steps are documented");
+
 const failures = checks.filter((item) => !item.ok);
 for (const item of checks) console.log(`[${item.ok ? "PASS" : "FAIL"}] ${item.name} — ${item.detail}`);
 console.log(`\nTOOLBOX v${appVersion ?? packageJson.version} preflight: ${failures.length === 0 ? "PASS" : "FAIL"} (${checks.length - failures.length}/${checks.length})`);
