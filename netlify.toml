@@ -1,4 +1,4 @@
-# TOOLBOX v0.14.68 — Netlify static-site deployment
+# TOOLBOX v0.14.73 — Netlify SPA route fallback fix
 [build]
   command = "npm run build"
   publish = "dist"
@@ -7,8 +7,8 @@
   NODE_VERSION = "22"
   SITE_URL = "https://toolboxbox.netlify.app"
 
-# Static files in dist are served directly; these rules provide client-side tool routes.
+# Serve existing static assets normally; route app paths through the SPA entry point.
 [[redirects]]
-  from = "/tools/*"
+  from = "/*"
   to = "/index.html"
   status = 200

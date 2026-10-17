@@ -1,3 +1,8 @@
+## v0.14.73 — 2026-10-17 — Netlify route fallback and deployment workflow
+- Fixed Netlify deep links by rewriting unknown app routes to `/index.html` with HTTP 200, while allowing existing static assets to be served normally.
+- Updated the deployment batch file to run validation before committing and pushing to the `realtoolbox` remote (the correct repository for the current site).
+- Kept the GitHub Pages-specific `public/404.html` behavior isolated from normal Netlify client-side routing.
+
 ## v0.14.71 — 2026-10-16 — UI polish and custom branding
 - Replaced the plain T brand mark with a custom geometric toolbox symbol in the header and favicon.
 - Reduced excessive shadows and rounded surfaces; introduced a calmer slate/blue accent palette.

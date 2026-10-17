@@ -1,2 +1,2 @@
-/** TOOLBOX v0.14.72 — accessible focus states and responsive UI polish */
-export const APP_VERSION = "0.14.72";
+/** TOOLBOX v0.14.73 — fix Netlify deep-link redirects and deployment workflow */
+export const APP_VERSION = "0.14.73";
