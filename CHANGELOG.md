@@ -1,3 +1,8 @@
+## v0.14.75 — 2026-10-17 — Remove homepage hero panel
+- Removed the large introductory hero box from the initial homepage view so tool sections appear immediately.
+- Kept the global header search, category sidebar, quick-start/favorites/recent sections, and all tools intact.
+- Version: `0.14.75`.
+
 ## v0.14.74 — 2026-10-17 — Search UI, Tabi photo shortcut, and WebP engine reliability
 - Fixed the global search input overflowing its header by overriding generic form-control styles and tightening responsive flex sizing.
 - Typing `tabi` now opens the same final photo reward as the footer easter egg; the footer button label stays exactly `아무 의미 없는 버튼` without counters or renaming.

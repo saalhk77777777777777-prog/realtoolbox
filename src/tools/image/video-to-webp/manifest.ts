@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.74 — Reliable self-hosted FFmpeg core loading */
+/** TOOLBOX v0.14.75 — Reliable self-hosted FFmpeg core loading */
 import type { ToolManifest } from "../../../core/types.ts";
 import { registerTool } from "../../../core/toolRegistry.ts";
 
@@ -12,7 +12,7 @@ type VideoToWebPOptions = {
 
 export const videoToWebPManifest: ToolManifest = {
   id: "video-to-webp",
-  version: "0.14.74",
+  version: "0.14.75",
   title: "영상 → 움직이는 WebP",
   slug: "video-to-webp",
   category: "image",

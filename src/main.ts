@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.67 — UI scale, contact email, and feedback collection */
+/** TOOLBOX v0.14.75 — remove homepage hero panel */
 import { APP_VERSION } from "./version.ts";
 import { installTabiEasterEggs } from "./easter-eggs/tabi-easter-eggs.ts";
 import { registerFileSizeChecker } from "./tools/file/file-size-checker/manifest.ts";
@@ -372,7 +372,7 @@ function homeView(): string {
   const visible = category === "favorite" ? favorites : tools;
   return `
     <div class="workspace-layout"><aside class="sidebar"><div class="sidebar-section"><div class="sidebar-label">도구 모음</div><a class="side-link ${!category ? "active" : ""}" href="/" data-link><span>⌂</span>전체 도구 <b>${allTools.length}</b></a><a class="side-link ${category === "favorite" ? "active" : ""}" href="/?category=favorite" data-link><span>★</span>즐겨찾기 <b>${favorites.length}</b></a></div><div class="sidebar-section"><div class="sidebar-label">분류</div>${Object.entries(CATEGORY_META).map(([key, meta]) => `<a class="side-link ${category === key ? "active" : ""}" href="/?category=${key}" data-link><span>${meta.icon}</span>${meta.label}<b>${counts[key]}</b></a>`).join("")}</div></aside>
-      <section class="workspace-main">${category === "favorite" ? `<div class="page-heading"><span class="eyebrow">즐겨찾기</span><h1>즐겨찾기</h1><p>저장해 둔 도구를 모아봤습니다.</p></div>` : category ? `<div class="page-heading"><span class="eyebrow">${categoryLabel(category)}</span><h1>${categoryLabel(category)} 도구</h1><p>${tools.length}개의 도구가 있습니다. 필요한 작업을 선택해 보세요.</p></div>` : `<section class="hero"><div><span class="eyebrow">브라우저 도구 모음</span><h1>필요한 작업,<br><em>여기서 바로 끝내보세요.</em></h1><p>이미지 변환부터 PDF 정리, 텍스트와 데이터 가공까지. 필요한 도구를 골라 사용하세요.</p><div class="hero-search"><span>⌕</span><input type="search" placeholder="도구 이름이나 작업을 입력하세요" data-hero-search aria-label="도구 검색"><kbd>⌘ K</kbd></div></div><div class="hero-orb"><span>${allTools.length}</span><small>TOOLS</small></div></section>`}
+      <section class="workspace-main">${category === "favorite" ? `<div class="page-heading"><span class="eyebrow">즐겨찾기</span><h1>즐겨찾기</h1><p>저장해 둔 도구를 모아봤습니다.</p></div>` : category ? `<div class="page-heading"><span class="eyebrow">${categoryLabel(category)}</span><h1>${categoryLabel(category)} 도구</h1><p>${tools.length}개의 도구가 있습니다. 필요한 작업을 선택해 보세요.</p></div>` : ""}
         ${!category && favorites.length ? `<section class="tool-section"><div class="section-title"><div><h2>★ 즐겨찾기</h2><span>자주 사용하는 도구를 모았습니다</span></div><a href="/?category=favorite" data-link>전체 보기 →</a></div><div class="tool-grid compact">${favorites.slice(0, 4).map((t) => toolCard(t!)).join("")}</div></section>` : ""}
         ${!category && !favorites.length ? `<section class="tool-section"><div class="section-title"><div><h2>빠른 시작</h2><span>필요한 작업을 선택해 보세요</span></div></div><div class="tool-grid compact">${featured.map((t) => toolCard(t!)).join("")}</div></section>` : ""}
         ${!category && recents.length ? `<section class="tool-section"><div class="section-title"><div><h2>최근 사용</h2><span>최근에 사용한 도구입니다</span></div></div><div class="tool-grid compact">${recents.slice(0, 4).map((t) => toolCard(t!)).join("")}</div></section>` : ""}
@@ -434,10 +434,7 @@ export async function render(): Promise<void> {
   bindWorkspace();
   installFeedback();
   installTabiEasterEggs();
-  document.querySelector<HTMLInputElement>("[data-hero-search]")?.addEventListener("input", (e) => {
-    const source = e.currentTarget as HTMLInputElement; const global = document.querySelector<HTMLInputElement>("#gs");
-    if (global) { global.value = source.value; global.dispatchEvent(new Event("input")); global.focus(); }
-  });
+
   // mount tool UI
   if (path.startsWith("/tools/")) {
     const slug = path.replace("/tools/", "");
