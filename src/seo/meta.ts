@@ -1,12 +1,10 @@
-/**
- * TOOLBOX v0.14.66 — SEO helper with project base path (§07, §113.18)
- * 각 public page에 unique title/description/canonical/H1 제공.
- */
+/** TOOLBOX v0.14.76 — per-page SEO keyword metadata */
 export interface PageMeta {
   title: string;
   description: string;
   canonical: string;
   h1: string;
+  keywords?: string[];
 }
 
 export function applyMeta(meta: PageMeta): void {
@@ -18,6 +16,13 @@ export function applyMeta(meta: PageMeta): void {
     document.head.appendChild(desc);
   }
   desc.setAttribute("content", meta.description);
+  let keywordTag = document.querySelector('meta[name="keywords"]');
+  if (!keywordTag) {
+    keywordTag = document.createElement("meta");
+    keywordTag.setAttribute("name", "keywords");
+    document.head.appendChild(keywordTag);
+  }
+  keywordTag.setAttribute("content", [...new Set(meta.keywords ?? [])].join(", "));
   let canon = document.querySelector('link[rel="canonical"]');
   if (!canon) {
     canon = document.createElement("link");

@@ -1,7 +1,7 @@
 @echo off
 setlocal
 chcp 65001 >nul
-title TOOLBOX v0.14.75 - Build and Deploy
+title TOOLBOX v0.14.76 - Build and Deploy
 
 cd /d "%~dp0"
 if errorlevel 1 goto :fail
@@ -35,7 +35,7 @@ git diff --cached --quiet
 if not errorlevel 1 (
   echo 변경된 파일이 없습니다.
 ) else (
-  git commit -m "feat(v0.14.75): polish UI and stabilize WebP loading"
+  git commit -m "feat(v0.14.76): polish UI and stabilize WebP loading"
   if errorlevel 1 goto :fail
 )
 

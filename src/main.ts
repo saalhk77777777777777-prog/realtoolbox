@@ -388,10 +388,11 @@ async function toolView(slug: string): Promise<string> {
   const tool = getToolBySlug(slug);
   if (!tool) return staticView("404 — 도구를 찾을 수 없습니다", `<p><a href="/" data-link>홈으로</a></p>`);
   applyMeta({
-    title: `${tool.title} | TOOLBOX`,
-    description: tool.description,
+    title: `${tool.title} | 무료 온라인 도구 - TOOLBOX`,
+    description: `${tool.description} 브라우저에서 무료로 사용하는 ${categoryLabel(tool.category)} 도구입니다.`,
     canonical: `/tools/${tool.slug}`,
     h1: tool.title,
+    keywords: [...new Set([tool.title, ...tool.keywords, categoryLabel(tool.category), "무료 온라인 도구", "브라우저 도구"])].slice(0, 12),
   });
   track("tool_open", { tool: tool.id });
   return `
@@ -403,10 +404,11 @@ export async function render(): Promise<void> {
   let inner = "";
   if (path === "/") {
     applyMeta({
-      title: "TOOLBOX — 브라우저 하나로 끝내는 파일·이미지·데이터 도구",
-      description: "설치 없이 파일 크기 확인, 이미지 압축·변환, JSON 정리 등을 브라우저에서 처리하는 Local-first 웹 작업공간입니다.",
+      title: "무료 온라인 도구 모음 | 파일·이미지·PDF·JSON·CSV 변환 - TOOLBOX",
+      description: "설치 없이 브라우저에서 파일 관리, 이미지 압축·변환, PDF 편집, JSON·CSV 변환, 텍스트 정리와 개발자 도구를 무료로 사용하세요. 민감한 파일은 가능한 한 브라우저 안에서 처리합니다.",
       canonical: "/",
       h1: "TOOLBOX",
+      keywords: ["무료 온라인 도구", "온라인 유틸리티", "파일 변환", "파일 크기 확인", "이미지 압축", "이미지 변환", "PDF 도구", "JSON 포맷터", "CSV 변환", "텍스트 도구", "개발자 도구", "브라우저 도구"],
     });
     track("page_view", { path });
     inner = homeView();

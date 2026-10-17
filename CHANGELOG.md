@@ -1,3 +1,10 @@
+## v0.14.76 — 2026-10-17 — SEO keyword improvements
+- Updated homepage title and description to naturally target free online tools, file conversion, image compression, PDF, JSON, CSV, text, and developer tools.
+- Added per-page keyword metadata derived from each tool's title, manifest keywords, and category.
+- Expanded WebApplication structured data with a description and feature list.
+- Note: Google ignores the meta keywords tag for ranking; page titles, descriptions, and useful visible content are the primary focus.
+- Version: `0.14.76`.
+
 ## v0.14.75 — 2026-10-17 — Remove homepage hero panel
 - Removed the large introductory hero box from the initial homepage view so tool sections appear immediately.
 - Kept the global header search, category sidebar, quick-start/favorites/recent sections, and all tools intact.
