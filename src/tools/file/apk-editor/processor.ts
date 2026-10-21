@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.78 — guarded browser-local APK processing */
+/** TOOLBOX v0.14.81 — guarded browser-local APK processing */
 import JSZip from "jszip";
 import type { ToolError } from "../../../core/types.ts";
 export const MAX_APK_BYTES = 200 * 1024 * 1024;
@@ -52,17 +52,29 @@ function extractStringPool(bytes: Uint8Array): string[] {
   }
   return [];
 }
-export async function inspectApk(file: File): Promise<ApkInspection> {
-  const zip = await JSZip.loadAsync(await file.arrayBuffer(), { checkCRC32: false, createFolders: false });
-  const entries: ApkEntry[] = [];
+function assertArchiveLimits(zip: JSZip): Map<string, number> {
+  const sizes = new Map<string, number>();
   let expandedTotal = 0;
   for (const [name, entry] of Object.entries(zip.files)) {
     if (entry.dir) continue;
     const internal = (entry as unknown as { _data?: { compressedSize?: number; uncompressedSize?: number } })._data;
-    const size = internal?.uncompressedSize ?? 0, compressedSize = internal?.compressedSize ?? 0;
+    const size = internal?.uncompressedSize ?? 0;
+    if (!Number.isFinite(size) || size < 0) throw new Error("ZIP 내부 파일 크기를 확인할 수 없어 안전을 위해 중단했어: " + name);
     if (size > MAX_ENTRY_BYTES) throw new Error("내부 파일이 128 MiB를 초과해 안전을 위해 중단했어: " + name);
     expandedTotal += size;
     if (expandedTotal > MAX_EXPANDED_BYTES) throw new Error("압축 해제 예상 크기가 512 MiB를 초과해 안전을 위해 중단했어.");
+    sizes.set(name, size);
+  }
+  return sizes;
+}
+export async function inspectApk(file: File): Promise<ApkInspection> {
+  const zip = await JSZip.loadAsync(await file.arrayBuffer(), { checkCRC32: false, createFolders: false });
+  const entries: ApkEntry[] = [];
+  assertArchiveLimits(zip);
+  for (const [name, entry] of Object.entries(zip.files)) {
+    if (entry.dir) continue;
+    const internal = (entry as unknown as { _data?: { compressedSize?: number; uncompressedSize?: number } })._data;
+    const size = internal?.uncompressedSize ?? 0, compressedSize = internal?.compressedSize ?? 0;
     const leaf = name.slice(name.lastIndexOf("/") + 1);
     entries.push({ name, size, compressedSize, extension: leaf.includes(".") ? leaf.slice(leaf.lastIndexOf(".")).toLowerCase() : "" });
   }
@@ -117,8 +129,17 @@ export async function analyzeDex(fileName: string, bytes: Uint8Array): Promise<D
 export async function rebuildApk(file: File, replacements: Map<string, File>): Promise<Blob> {
   if (file.size > MAX_APK_BYTES) throw new Error("APK 크기가 200 MiB 제한을 초과했어.");
   const zip = await JSZip.loadAsync(await file.arrayBuffer(), { checkCRC32: false, createFolders: false });
-  for (const [path, replacement] of replacements) { if (!zip.file(path)) throw new Error("APK 안에서 파일을 찾을 수 없어: " + path); zip.file(path, new Uint8Array(await replacement.arrayBuffer()), { binary: true, date: new Date() }); }
-  for (const path of Object.keys(zip.files)) if (/^META-INF\/.*\.(RSA|DSA|EC|SF)$/i.test(path) || /^META-INF\/MANIFEST\.MF$/i.test(path)) zip.remove(path);
+  const sizes = assertArchiveLimits(zip);
+  let projectedExpandedTotal = [...sizes.values()].reduce((sum, size) => sum + size, 0);
+  for (const [entryPath, replacement] of replacements) {
+    if (!zip.file(entryPath)) throw new Error("APK 안에서 파일을 찾을 수 없어: " + entryPath);
+    if (replacement.size > MAX_ENTRY_BYTES) throw new Error("교체 파일이 128 MiB 제한을 초과했어: " + entryPath);
+    projectedExpandedTotal += replacement.size - (sizes.get(entryPath) ?? 0);
+    if (projectedExpandedTotal > MAX_EXPANDED_BYTES) throw new Error("교체 후 압축 해제 예상 크기가 512 MiB를 초과해 안전을 위해 중단했어.");
+    zip.file(entryPath, new Uint8Array(await replacement.arrayBuffer()), { binary: true, date: new Date() });
+    sizes.set(entryPath, replacement.size);
+  }
+  for (const entryPath of Object.keys(zip.files)) if (/^META-INF\/.*\.(RSA|DSA|EC|SF)$/i.test(entryPath) || /^META-INF\/MANIFEST\.MF$/i.test(entryPath)) zip.remove(entryPath);
   return zip.generateAsync({ type: "blob", mimeType: "application/vnd.android.package-archive", compression: "DEFLATE", compressionOptions: { level: 6 }, platform: "DOS" });
 }
 export async function process(input: Input): Promise<ApkInspection> { const error = validate(input); if (error) throw new Error(error.what + " " + error.how); return inspectApk(input.file); }

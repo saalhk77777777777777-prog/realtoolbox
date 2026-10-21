@@ -1,8 +1,8 @@
-/** TOOLBOX v0.14.79 — APK Editor manifest */
+/** TOOLBOX v0.14.81 — APK Editor manifest */
 import type { ToolManifest } from "../../../core/types.ts";
 import { registerTool } from "../../../core/toolRegistry.ts";
 export const manifest: ToolManifest = {
-  id: "apk-editor", version: "0.14.79", title: "APK 편집기", slug: "apk-editor",
+  id: "apk-editor", version: "0.14.81", title: "APK 편집기", slug: "apk-editor",
   category: "file",
   description: "APK 아이콘·이미지 미리보기, APK 리소스 교체, ZIP 기반 Unity/OBB 아카이브 탐색을 브라우저에서 처리합니다. 서버 업로드 없음.",
   keywords: ["apk 편집기", "apk 분석", "android apk", "manifest", "dex 분석", "앱 리소스 편집", "unity asset", "obb 압축 해제", "apk icon preview"],

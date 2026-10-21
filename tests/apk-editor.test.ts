@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.79 — APK Editor tests */
+/** TOOLBOX v0.14.81 — APK Editor tests */
 import { describe, expect, it } from "vitest";
 import JSZip from "jszip";
 import { analyzeDex, editTextManifest, inspectApk, rebuildApk, validate } from "../src/tools/file/apk-editor/processor.ts";
@@ -11,10 +11,13 @@ async function makeApk(): Promise<File> {
   zip.file("META-INF/CERT.SF", "old signature");
   return fakeFile("demo.apk", await zip.generateAsync({ type: "uint8array" }));
 }
-describe("APK Editor v0.14.79", () => {
+describe("APK Editor v0.14.81", () => {
   it("rejects missing or non-APK inputs", () => { expect(validate(null)).not.toBeNull(); expect(validate({ file: new File(["x"], "not.zip") })).not.toBeNull(); });
   it("inspects ZIP entries and text manifest metadata", async () => { const info = await inspectApk(await makeApk()); expect(info.entryCount).toBe(4); expect(info.packageName).toBe("org.example.demo"); expect(info.dexFiles).toEqual(["classes.dex"]); expect(info.signatureFiles).toContain("META-INF/CERT.SF"); });
   it("rebuilds with replacements and strips stale signatures", async () => { const file = await makeApk(); const output = await rebuildApk(file, new Map([["res/drawable/icon.png", new File([new Uint8Array([9, 8])], "icon.png")]])); const zip = await JSZip.loadAsync(await output.arrayBuffer()); expect(await zip.file("res/drawable/icon.png")!.async("uint8array")).toEqual(new Uint8Array([9, 8])); expect(zip.file("META-INF/CERT.SF")).toBeNull(); });
+  it("rejects replacement paths missing from the APK", async () => {
+    await expect(rebuildApk(await makeApk(), new Map([["assets/not-found.bin", new File(["x"], "not-found.bin")]]))).rejects.toThrow("APK 안에서 파일을 찾을 수 없어");
+  });
   it("reads DEX header and basic strings without pretending to decompile", async () => { const bytes = new Uint8Array(120); bytes.set(new TextEncoder().encode("dex\n035\0hello.class Lorg/example/App;")); new DataView(bytes.buffer).setUint32(32, bytes.length, true); const result = await analyzeDex("classes.dex", bytes); expect(result.version).toBe("035"); expect(result.stringCount).toBeGreaterThan(0); });
   it("edits text XML manifest attributes and escapes XML values", () => {
     const xml = '<?xml version="1.0"?><manifest package="org.example.demo" android:versionName="1.2" android:versionCode="12"/>';

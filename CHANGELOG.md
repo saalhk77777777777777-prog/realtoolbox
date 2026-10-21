@@ -1,3 +1,10 @@
+## v0.14.81 — 2026-10-21 — APK export safety hardening
+- Reuses ZIP entry and total expanded-size guardrails during both inspection and export.
+- Rejects replacement files larger than 128 MiB and projected expanded archives larger than 512 MiB.
+- Keeps replacement targets restricted to existing APK entries and adds a regression test.
+- Makes sitemap generation report the centralized application version instead of a stale hardcoded version.
+- Version: 0.14.81.
+
 ## v0.14.79 — 2026-10-17 — APK visual preview, ZIP/Unity archive explorer, AdSense integration
 - Added a phone-shaped home-screen preview and best-effort app icon discovery from image resources in APKs.
 - Added APK image resource selection and browser-local preview for common raster image types.

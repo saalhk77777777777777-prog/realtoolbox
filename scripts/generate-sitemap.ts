@@ -1,7 +1,8 @@
-/** TOOLBOX v0.14.67 — Generate canonical sitemap and robots URLs from the deployed site URL. */
+/** TOOLBOX v0.14.81 — Generate canonical sitemap and robots URLs from the deployed site URL. */
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { APP_VERSION } from "../src/version";
 
 const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const PUBLIC = join(ROOT, "public");
@@ -28,4 +29,4 @@ const urls = [...paths].sort((a, b) => a === "/" ? -1 : b === "/" ? 1 : a.locale
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((path) => `  <url><loc>${loc(path)}</loc></url>`).join("\n")}\n</urlset>\n`;
 writeFileSync(join(PUBLIC, "sitemap.xml"), xml, "utf8");
 writeFileSync(join(PUBLIC, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${baseUrl ? `${baseUrl}${basePath}/sitemap.xml` : `${basePath || ""}/sitemap.xml`}\n`, "utf8");
-console.log(`TOOLBOX v0.14.67 sitemap generated: ${urls.length} routes${baseUrl ? ` (${baseUrl})` : " (relative paths; set SITE_URL for production canonical URLs)"}`);
+console.log(`TOOLBOX v${APP_VERSION} sitemap generated: ${urls.length} routes${baseUrl ? ` (${baseUrl})` : " (relative paths; set SITE_URL for production canonical URLs)"}`);
