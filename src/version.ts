@@ -1,2 +1,2 @@
-/** TOOLBOX v0.14.84 — Accept generic MIME videos with known extensions. */
-export const APP_VERSION = "0.14.84";
+/** TOOLBOX v0.14.85 — Align Video to WebP manifest version with the app version. */
+export const APP_VERSION = "0.14.85";

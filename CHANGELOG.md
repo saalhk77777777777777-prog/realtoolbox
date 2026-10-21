@@ -1,3 +1,6 @@
+## v0.14.85 — 2026-10-22 — Align Video to WebP tool version
+- Updates the Video to WebP manifest version to match the app version, preventing stale per-tool version metadata.
+
 ## v0.14.84 — 2026-10-22 — More tolerant video file validation
 - Accepts supported video extensions when browsers or file providers report a generic `application/octet-stream` MIME type.
 - Continues rejecting unsupported generic files and explicit non-video MIME types.
