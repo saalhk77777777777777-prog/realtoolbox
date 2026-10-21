@@ -1,2 +1,2 @@
-/** TOOLBOX v0.14.82 — Normalize legacy /TOOLBOX/ URLs to the Netlify root. */
-export const APP_VERSION = "0.14.82";
+/** TOOLBOX v0.14.83 — Keep search results below the sticky header on desktop and mobile. */
+export const APP_VERSION = "0.14.83";

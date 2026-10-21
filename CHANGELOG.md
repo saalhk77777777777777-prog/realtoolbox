@@ -1,3 +1,8 @@
+## v0.14.83 — 2026-10-22 — Search dropdown positioning
+- Positions desktop and mobile search results below the full sticky header to prevent overlap with the search input.
+- Keeps the dropdown responsive to header height changes.
+- Updates app and package versions to 0.14.83.
+
 ## v0.14.82 — 2026-10-22 — Legacy project-path redirect
 - Redirects legacy `/TOOLBOX` and `/TOOLBOX/*` URLs to the equivalent canonical Netlify root paths before the SPA fallback.
 - Keeps existing SPA fallback and static-asset behavior unchanged.
