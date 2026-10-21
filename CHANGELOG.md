@@ -1,3 +1,9 @@
+## v0.14.82 — 2026-10-22 — Legacy project-path redirect
+- Redirects legacy `/TOOLBOX` and `/TOOLBOX/*` URLs to the equivalent canonical Netlify root paths before the SPA fallback.
+- Keeps existing SPA fallback and static-asset behavior unchanged.
+- Updates the centralized app and package version to 0.14.82.
+- Validation: typecheck, 56 test files / 801 tests, and production build passed.
+
 ## v0.14.81 — 2026-10-21 — APK export safety hardening
 - Reuses ZIP entry and total expanded-size guardrails during both inspection and export.
 - Rejects replacement files larger than 128 MiB and projected expanded archives larger than 512 MiB.
