@@ -1,3 +1,8 @@
+## v0.14.84 — 2026-10-22 — More tolerant video file validation
+- Accepts supported video extensions when browsers or file providers report a generic `application/octet-stream` MIME type.
+- Continues rejecting unsupported generic files and explicit non-video MIME types.
+- Adds regression tests for generic MIME validation.
+
 ## v0.14.83 — 2026-10-22 — Search dropdown positioning
 - Positions desktop and mobile search results below the full sticky header to prevent overlap with the search input.
 - Keeps the dropdown responsive to header height changes.

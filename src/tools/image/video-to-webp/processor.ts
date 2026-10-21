@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.74 — Reliable self-hosted FFmpeg core loading with Blob URL fallback */
+/** TOOLBOX v0.14.84 — Accept generic MIME video files when their extension is supported; retain self-hosted FFmpeg fallback. */
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile, toBlobURL } from "@ffmpeg/util";
 import type { ToolError } from "../../../core/types.ts";
@@ -38,7 +38,9 @@ export function validateVideoToWebP(file: File | null, options: VideoToWebPOptio
   }
   const extension = file.name.split(".").pop()?.toLowerCase() ?? "";
   const supportedExtensions = new Set(["mp4", "mov", "webm", "m4v", "mpeg", "mpg", "avi"]);
-  if ((file.type && !file.type.startsWith("video/")) || (!file.type && !supportedExtensions.has(extension))) {
+  const genericMime = !file.type || file.type === "application/octet-stream" || file.type === "application/x-octet-stream";
+  const extensionSupported = supportedExtensions.has(extension);
+  if ((!genericMime && !file.type.startsWith("video/")) || (genericMime && !extensionSupported)) {
     return { code: "UNSUPPORTED", what: "영상 파일만 변환할 수 있습니다.", why: "선택한 파일 형식을 영상으로 확인하지 못했습니다.", how: "MP4, MOV, WebM 등 영상 파일을 선택해 주세요." };
   }
   if (![8, 12, 15, 20].includes(options.fps) || ![320, 480, 640, 800].includes(options.width)) {

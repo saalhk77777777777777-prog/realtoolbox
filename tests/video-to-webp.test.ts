@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.74 — Video to Animated WebP validation tests */
+/** TOOLBOX v0.14.84 — Video to Animated WebP validation tests */
 import { describe, expect, it } from "vitest";
 import { MAX_VIDEO_BYTES, validateVideoToWebP, type VideoToWebPOptions } from "../src/tools/image/video-to-webp/processor.ts";
 
@@ -19,7 +19,7 @@ function makeVideo(overrides: Partial<File> = {}): File {
   } as File;
 }
 
-describe("video-to-webp validation — v0.14.74", () => {
+describe("video-to-webp validation — v0.14.84", () => {
   it("requires a selected video", () => {
     expect(validateVideoToWebP(null, validOptions)?.code).toBe("USER_INPUT");
   });
@@ -34,6 +34,15 @@ describe("video-to-webp validation — v0.14.74", () => {
 
   it("rejects non-video MIME types", () => {
     expect(validateVideoToWebP(makeVideo({ type: "image/png" }), validOptions)?.code).toBe("UNSUPPORTED");
+  });
+
+  it("accepts supported video extensions when the browser reports a generic MIME type", () => {
+    expect(validateVideoToWebP(makeVideo({ type: "application/octet-stream" }), validOptions)).toBeNull();
+    expect(validateVideoToWebP(makeVideo({ type: "" }), validOptions)).toBeNull();
+  });
+
+  it("rejects generic MIME files with unsupported extensions", () => {
+    expect(validateVideoToWebP(makeVideo({ name: "clip.bin", type: "application/octet-stream" }), validOptions)?.code).toBe("UNSUPPORTED");
   });
 
   it("rejects clips longer than 15 seconds", () => {
