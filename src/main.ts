@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.75 — remove homepage hero panel */
+/** TOOLBOX v0.14.86 — add eight local-first utility and developer tools. */
 import { APP_VERSION } from "./version.ts";
 import { installAdsense } from "./adsense.ts";
 import { installTabiEasterEggs } from "./easter-eggs/tabi-easter-eggs.ts";
@@ -104,6 +104,14 @@ import { registerColorConverter } from "./tools/developer/color-converter/manife
 import { registerHttpStatusAnalyzer } from "./tools/developer/http-status-analyzer/manifest.ts";
 import { registerDateCalculator } from "./tools/utility/date-calculator/manifest.ts";
 import { registerUnitConverter } from "./tools/utility/unit-converter/manifest.ts";
+import { registerPasswordGenerator } from "./tools/developer/password-generator/manifest.ts";
+import { registerRandomNumberGenerator } from "./tools/utility/random-number-generator/manifest.ts";
+import { registerPercentageCalculator } from "./tools/utility/percentage-calculator/manifest.ts";
+import { registerAspectRatioCalculator } from "./tools/utility/aspect-ratio-calculator/manifest.ts";
+import { registerLoremIpsumGenerator } from "./tools/text/lorem-ipsum-generator/manifest.ts";
+import { registerPxRemConverter } from "./tools/developer/px-rem-converter/manifest.ts";
+import { registerRomanNumeralConverter } from "./tools/developer/roman-numeral-converter/manifest.ts";
+import { registerBinaryTextConverter } from "./tools/developer/binary-text-converter/manifest.ts";
 import { getTool, getToolBySlug, listTools } from "./core/toolRegistry.ts";
 import { applyMeta } from "./seo/meta.ts";
 import { track } from "./analytics/analytics.ts";
@@ -212,6 +220,14 @@ registerReadingTimeCalculator();
 registerSentenceCounter();
 registerWordFrequencyAnalyzer();
 
+registerPasswordGenerator();
+registerRandomNumberGenerator();
+registerPercentageCalculator();
+registerAspectRatioCalculator();
+registerLoremIpsumGenerator();
+registerPxRemConverter();
+registerRomanNumeralConverter();
+registerBinaryTextConverter();
 const app = document.getElementById("app")!;
 const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
 const appPath = (path: string) => path.startsWith(BASE_PATH + "/") || path === BASE_PATH ? (path.slice(BASE_PATH.length) || "/") : path;

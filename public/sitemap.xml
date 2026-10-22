@@ -6,8 +6,10 @@
   <url><loc>/privacy</loc></url>
   <url><loc>/terms</loc></url>
   <url><loc>/tools/apk-editor</loc></url>
+  <url><loc>/tools/aspect-ratio-calculator</loc></url>
   <url><loc>/tools/base64</loc></url>
   <url><loc>/tools/batch-file-zip-creator</loc></url>
+  <url><loc>/tools/binary-text-converter</loc></url>
   <url><loc>/tools/case-converter</loc></url>
   <url><loc>/tools/character-frequency</loc></url>
   <url><loc>/tools/color-converter</loc></url>
@@ -62,10 +64,12 @@
   <url><loc>/tools/line-numberer</loc></url>
   <url><loc>/tools/line-sorter</loc></url>
   <url><loc>/tools/line-trim-tool</loc></url>
+  <url><loc>/tools/lorem-ipsum-generator</loc></url>
   <url><loc>/tools/markdown-table-generator</loc></url>
   <url><loc>/tools/newline-converter</loc></url>
   <url><loc>/tools/number-base-converter</loc></url>
   <url><loc>/tools/number-extractor</loc></url>
+  <url><loc>/tools/password-generator</loc></url>
   <url><loc>/tools/pdf-compare</loc></url>
   <url><loc>/tools/pdf-compress</loc></url>
   <url><loc>/tools/pdf-image-extractor</loc></url>
@@ -80,11 +84,15 @@
   <url><loc>/tools/pdf-text-search</loc></url>
   <url><loc>/tools/pdf-to-image</loc></url>
   <url><loc>/tools/pdf-watermark</loc></url>
+  <url><loc>/tools/percentage-calculator</loc></url>
   <url><loc>/tools/prefix-suffix-adder</loc></url>
+  <url><loc>/tools/px-rem-converter</loc></url>
   <url><loc>/tools/query-string-builder</loc></url>
+  <url><loc>/tools/random-number-generator</loc></url>
   <url><loc>/tools/reading-time-calculator</loc></url>
   <url><loc>/tools/regex-escape</loc></url>
   <url><loc>/tools/regex-tester</loc></url>
+  <url><loc>/tools/roman-numeral-converter</loc></url>
   <url><loc>/tools/sentence-counter</loc></url>
   <url><loc>/tools/slug-generator</loc></url>
   <url><loc>/tools/sql-formatter</loc></url>

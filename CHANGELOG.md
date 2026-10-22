@@ -1,3 +1,8 @@
+## v0.14.86 — 2026-10-22
+- Added eight local-first tools: Password Generator, Random Number Generator, Percentage Calculator, Aspect Ratio Calculator, Lorem Ipsum Generator, PX ↔ REM Converter, Roman Numeral Converter, and Text ↔ Binary Converter.
+- Added regression tests for all eight processors; existing registry and routing contracts remain unchanged.
+- No production deploy performed; validate locally before batching changes for deployment.
+
 ## v0.14.85 — 2026-10-22 — Align Video to WebP tool version
 - Updates the Video to WebP manifest version to match the app version, preventing stale per-tool version metadata.
 
