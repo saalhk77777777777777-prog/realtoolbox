@@ -1,0 +1,4 @@
+/** TOOLBOX v0.14.88 — CSS Gradient Generator processor. */
+import type{ToolError}from"../../../core/types.ts";
+export function validate(x:unknown):ToolError|null{const v=x as Record<string,any>;if(!v||typeof v!=="object"||typeof v.color1!=="string"||typeof v.color2!=="string"||!Number.isFinite(v.angle))return{code:"USER_INPUT",what:"입력값을 확인하세요.",why:"색상 또는 각도가 올바르지 않습니다.",how:"색상 코드와 각도를 입력하세요."};return null}
+export function process(x:unknown):unknown{const e=validate(x);if(e)throw Error(e.what+" "+e.how);const v=x as Record<string,any>;const valid=(s:string)=>/^#?(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(s);if(!valid(v.color1)||!valid(v.color2)||v.angle<0||v.angle>360)throw Error("색상 또는 각도 범위가 올바르지 않습니다.");const a=v.color1.startsWith("#")?v.color1:"#"+v.color1;const b=v.color2.startsWith("#")?v.color2:"#"+v.color2;return{css:"background: linear-gradient("+v.angle+"deg, "+a+", "+b+");",color1:a,color2:b,angle:v.angle}}

@@ -1,4 +1,4 @@
-## v0.14.87 — 2026-10-22
+## v0.14.88 — 2026-10-22\n- Added Gitignore generator, SemVer parser, chmod permission calculator, HTML escape converter, CSS gradient generator, JSON Schema inference, regex replace, and .env text validator.\n- Local processing only; no new dependencies and no production deploy.\n\n## v0.14.87 — 2026-10-22
 - Added tip and loan calculators, WCAG color contrast checker, UUID validator, JSON path finder, Markdown link extractor, CSV delimiter detector, and MIME type lookup.
 - All new tools process locally; no new dependencies added.
 - Local validation required before deployment; no production deploy performed.

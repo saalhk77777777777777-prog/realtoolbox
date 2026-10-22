@@ -1,0 +1,4 @@
+/** TOOLBOX v0.14.88 — chmod calculator. */
+import type{ToolError}from"../../../core/types.ts";
+export function validate(x:unknown):ToolError|null{const v=x as Record<string,any>;return !v||typeof v.value!=="string"||v.value.length>20?{code:"USER_INPUT",what:"권한 값을 확인하세요.",why:"입력값이 올바르지 않습니다.",how:"755, 0644 또는 rwxr-xr-x를 입력하세요."}:null}
+export function process(x:unknown):unknown{const e=validate(x);if(e)throw Error(e.what+" "+e.how);const s=(x as any).value.trim();if(!(/^[0-7]{3,4}$/.test(s)||/^[rwx-]{9}$/.test(s)))throw Error("755, 0644 또는 rwxr-xr-x 형식을 입력하세요.");let octal:string,symbolic:string;if(/^[0-7]{3,4}$/.test(s)){octal=s.padStart(4,"0");symbolic=octal.slice(-3).split("").map(d=>{const n=+d;return(n&4?"r":"-")+(n&2?"w":"-")+(n&1?"x":"-")}).join("")}else{symbolic=s;octal=s.match(/.{3}/g)!.map((q:string)=>String((q[0]==="r"?4:0)+(q[1]==="w"?2:0)+(q[2]==="x"?1:0))).join("").padStart(4,"0")}return{octal,symbolic,command:"chmod "+octal.slice(-3)}}

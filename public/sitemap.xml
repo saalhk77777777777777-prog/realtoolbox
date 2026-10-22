@@ -18,6 +18,7 @@
   <url><loc>/tools/cron-expression-generator</loc></url>
   <url><loc>/tools/crop-rotate-flip</loc></url>
   <url><loc>/tools/css-formatter-minifier</loc></url>
+  <url><loc>/tools/css-gradient-generator</loc></url>
   <url><loc>/tools/csv-chart</loc></url>
   <url><loc>/tools/csv-cleaner</loc></url>
   <url><loc>/tools/csv-column-selector</loc></url>
@@ -29,6 +30,7 @@
   <url><loc>/tools/date-calculator</loc></url>
   <url><loc>/tools/duplicate-finder</loc></url>
   <url><loc>/tools/duplicate-line-remover</loc></url>
+  <url><loc>/tools/env-file-validator</loc></url>
   <url><loc>/tools/exif-remover</loc></url>
   <url><loc>/tools/file-checksum</loc></url>
   <url><loc>/tools/file-content-previewer</loc></url>
@@ -37,8 +39,10 @@
   <url><loc>/tools/file-name-analyzer</loc></url>
   <url><loc>/tools/file-signature-checker</loc></url>
   <url><loc>/tools/file-size-checker</loc></url>
+  <url><loc>/tools/gitignore-generator</loc></url>
   <url><loc>/tools/hash-generator</loc></url>
   <url><loc>/tools/html-entity</loc></url>
+  <url><loc>/tools/html-escape-converter</loc></url>
   <url><loc>/tools/html-formatter</loc></url>
   <url><loc>/tools/html-tag-remover</loc></url>
   <url><loc>/tools/http-status-analyzer</loc></url>
@@ -60,6 +64,7 @@
   <url><loc>/tools/json-minifier</loc></url>
   <url><loc>/tools/json-path-finder</loc></url>
   <url><loc>/tools/json-path-query</loc></url>
+  <url><loc>/tools/json-schema-infer</loc></url>
   <url><loc>/tools/json-to-csv</loc></url>
   <url><loc>/tools/json-to-xml</loc></url>
   <url><loc>/tools/jwt-decoder</loc></url>
@@ -97,8 +102,10 @@
   <url><loc>/tools/random-number-generator</loc></url>
   <url><loc>/tools/reading-time-calculator</loc></url>
   <url><loc>/tools/regex-escape</loc></url>
+  <url><loc>/tools/regex-replace</loc></url>
   <url><loc>/tools/regex-tester</loc></url>
   <url><loc>/tools/roman-numeral-converter</loc></url>
+  <url><loc>/tools/semver-parser</loc></url>
   <url><loc>/tools/sentence-counter</loc></url>
   <url><loc>/tools/slug-generator</loc></url>
   <url><loc>/tools/sql-formatter</loc></url>
@@ -110,6 +117,7 @@
   <url><loc>/tools/tip-calculator</loc></url>
   <url><loc>/tools/unicode-inspector</loc></url>
   <url><loc>/tools/unit-converter</loc></url>
+  <url><loc>/tools/unix-permission-calculator</loc></url>
   <url><loc>/tools/url-encoder</loc></url>
   <url><loc>/tools/url-extractor</loc></url>
   <url><loc>/tools/url-parser</loc></url>

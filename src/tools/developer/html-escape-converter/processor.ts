@@ -1,0 +1,4 @@
+/** TOOLBOX v0.14.88 — HTML escape converter. */
+import type{ToolError}from"../../../core/types.ts";
+export function validate(x:unknown):ToolError|null{const v=x as Record<string,any>;return !v||typeof v.text!=="string"||v.text.length>1000000||!["escape","unescape"].includes(v.direction)?{code:"USER_INPUT",what:"텍스트를 확인하세요.",why:"입력 또는 변환 방향이 올바르지 않습니다.",how:"텍스트 1MB 이하와 변환 방향을 선택하세요."}:null}
+export function process(x:unknown):unknown{const e=validate(x);if(e)throw Error(e.what+" "+e.how);const v=x as any;let result:string;if(v.direction==="escape")result=v.text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");else result=v.text.replace(/&(?:amp|lt|gt|quot|#39);/gi,(s:string)=>({"&amp;":"&","&lt;":"<","&gt;":">","&quot;":String.fromCharCode(34),"&#39;":String.fromCharCode(39)}[s.toLowerCase()]||s));return{result}}
