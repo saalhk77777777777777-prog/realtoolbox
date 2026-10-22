@@ -12,6 +12,7 @@
   <url><loc>/tools/binary-text-converter</loc></url>
   <url><loc>/tools/case-converter</loc></url>
   <url><loc>/tools/character-frequency</loc></url>
+  <url><loc>/tools/color-contrast-checker</loc></url>
   <url><loc>/tools/color-converter</loc></url>
   <url><loc>/tools/color-extractor</loc></url>
   <url><loc>/tools/cron-expression-generator</loc></url>
@@ -20,6 +21,7 @@
   <url><loc>/tools/csv-chart</loc></url>
   <url><loc>/tools/csv-cleaner</loc></url>
   <url><loc>/tools/csv-column-selector</loc></url>
+  <url><loc>/tools/csv-delimiter-detector</loc></url>
   <url><loc>/tools/csv-filter</loc></url>
   <url><loc>/tools/csv-sorter</loc></url>
   <url><loc>/tools/csv-to-json</loc></url>
@@ -56,6 +58,7 @@
   <url><loc>/tools/json-formatter</loc></url>
   <url><loc>/tools/json-lines</loc></url>
   <url><loc>/tools/json-minifier</loc></url>
+  <url><loc>/tools/json-path-finder</loc></url>
   <url><loc>/tools/json-path-query</loc></url>
   <url><loc>/tools/json-to-csv</loc></url>
   <url><loc>/tools/json-to-xml</loc></url>
@@ -64,8 +67,11 @@
   <url><loc>/tools/line-numberer</loc></url>
   <url><loc>/tools/line-sorter</loc></url>
   <url><loc>/tools/line-trim-tool</loc></url>
+  <url><loc>/tools/loan-calculator</loc></url>
   <url><loc>/tools/lorem-ipsum-generator</loc></url>
+  <url><loc>/tools/markdown-link-extractor</loc></url>
   <url><loc>/tools/markdown-table-generator</loc></url>
+  <url><loc>/tools/mime-type-checker</loc></url>
   <url><loc>/tools/newline-converter</loc></url>
   <url><loc>/tools/number-base-converter</loc></url>
   <url><loc>/tools/number-extractor</loc></url>
@@ -101,12 +107,14 @@
   <url><loc>/tools/text-diff</loc></url>
   <url><loc>/tools/text-reverser</loc></url>
   <url><loc>/tools/timestamp-converter</loc></url>
+  <url><loc>/tools/tip-calculator</loc></url>
   <url><loc>/tools/unicode-inspector</loc></url>
   <url><loc>/tools/unit-converter</loc></url>
   <url><loc>/tools/url-encoder</loc></url>
   <url><loc>/tools/url-extractor</loc></url>
   <url><loc>/tools/url-parser</loc></url>
   <url><loc>/tools/uuid-generator</loc></url>
+  <url><loc>/tools/uuid-validator</loc></url>
   <url><loc>/tools/video-to-webp</loc></url>
   <url><loc>/tools/whitespace-cleaner</loc></url>
   <url><loc>/tools/whitespace-visualizer</loc></url>

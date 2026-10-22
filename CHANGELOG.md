@@ -1,3 +1,8 @@
+## v0.14.87 — 2026-10-22
+- Added tip and loan calculators, WCAG color contrast checker, UUID validator, JSON path finder, Markdown link extractor, CSV delimiter detector, and MIME type lookup.
+- All new tools process locally; no new dependencies added.
+- Local validation required before deployment; no production deploy performed.
+
 ## v0.14.86 — 2026-10-22
 - Added eight local-first tools: Password Generator, Random Number Generator, Percentage Calculator, Aspect Ratio Calculator, Lorem Ipsum Generator, PX ↔ REM Converter, Roman Numeral Converter, and Text ↔ Binary Converter.
 - Added regression tests for all eight processors; existing registry and routing contracts remain unchanged.

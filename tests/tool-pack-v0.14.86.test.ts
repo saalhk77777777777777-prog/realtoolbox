@@ -11,3 +11,13 @@ describe("TOOLBOX v0.14.86 tool pack",()=>{
  it("round-trips canonical roman numerals",()=>{expect(toRoman(2026)).toBe("MMXXVI");expect(fromRoman("MMXXVI")).toBe(2026);expect(validate("roman-numeral-converter",{value:"IIII",direction:"to-number"})).not.toBeNull()});
  it("round-trips UTF-8 text through binary",()=>{const binary=(run("binary-text-converter",{text:"안녕 Tabi",direction:"to-binary"}) as any).result;expect((run("binary-text-converter",{text:binary,direction:"to-text"}) as any).result).toBe("안녕 Tabi")});
 });
+describe("TOOLBOX v0.14.87 tool pack",()=>{
+ it("calculates tip, total, and split per person",()=>{const r=run("tip-calculator",{bill:50000,tipPercent:10,people:2}) as any;expect(r.tip).toBe(5000);expect(r.total).toBe(55000);expect(r.perPerson).toBe(27500)});
+ it("calculates amortized loan payment with zero and positive rates",()=>{const r=run("loan-calculator",{principal:1200,annualRate:0,months:12}) as any;expect(r.monthlyPayment).toBe(100);expect(r.totalInterest).toBe(0);expect((run("loan-calculator",{principal:10000000,annualRate:4.5,months:36}) as any).monthlyPayment).toBeGreaterThan(0)});
+ it("checks WCAG contrast ratio",()=>{const r=run("color-contrast-checker",{foreground:"#000000",background:"#FFFFFF"}) as any;expect(r.contrastRatio).toBe(21);expect(r.wcagAAA).toBe(true);expect(validate("color-contrast-checker",{foreground:"red",background:"#fff"})).not.toBeNull()});
+ it("validates UUID format and version variant",()=>{expect((run("uuid-validator",{value:"550e8400-e29b-41d4-a716-446655440000"}) as any).valid).toBe(true);expect((run("uuid-validator",{value:"not-a-uuid"}) as any).valid).toBe(false)});
+ it("finds a value using JSON path",()=>{const r=run("json-path-finder",{json:'{"items":[{"name":"Tabi"}]}',path:"$.items[0].name"}) as any;expect(r.result).toBe("Tabi");expect(()=>run("json-path-finder",{json:"{}",path:"$.missing.value"})).toThrow()});
+ it("extracts unique Markdown link URLs",()=>{const r=run("markdown-link-extractor",{text:"[A](https://example.com) and [B](https://example.com) ![pic](https://img.test/a.png)"}) as any;expect(r.count).toBe(2);expect(r.urls).toContain("https://example.com")});
+ it("detects comma-separated CSV",()=>{const r=run("csv-delimiter-detector",{text:"name,age\nTabi,16\nTimi,1"}) as any;expect(r.delimiter).toBe(",");expect(r.columns).toBe(2)});
+ it("looks up MIME types by extension without claiming content inspection",()=>{const r=run("mime-type-checker",{filename:"movie.webm"}) as any;expect(r.mimeType).toBe("video/webm");expect(r.note).toContain("실제 파일 내용은 검사하지 않습니다")});
+});

@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.86 — add eight local-first utility and developer tools. */
+/** TOOLBOX v0.14.87 — add eight local-first tools. */
 import { APP_VERSION } from "./version.ts";
 import { installAdsense } from "./adsense.ts";
 import { installTabiEasterEggs } from "./easter-eggs/tabi-easter-eggs.ts";
@@ -112,6 +112,14 @@ import { registerLoremIpsumGenerator } from "./tools/text/lorem-ipsum-generator/
 import { registerPxRemConverter } from "./tools/developer/px-rem-converter/manifest.ts";
 import { registerRomanNumeralConverter } from "./tools/developer/roman-numeral-converter/manifest.ts";
 import { registerBinaryTextConverter } from "./tools/developer/binary-text-converter/manifest.ts";
+import { registerTipCalculator } from "./tools/utility/tip-calculator/manifest.ts";
+import { registerLoanCalculator } from "./tools/utility/loan-calculator/manifest.ts";
+import { registerColorContrastChecker } from "./tools/design/color-contrast-checker/manifest.ts";
+import { registerUuidValidator } from "./tools/developer/uuid-validator/manifest.ts";
+import { registerJsonPathFinder } from "./tools/developer/json-path-finder/manifest.ts";
+import { registerMarkdownLinkExtractor } from "./tools/text/markdown-link-extractor/manifest.ts";
+import { registerCsvDelimiterDetector } from "./tools/data/csv-delimiter-detector/manifest.ts";
+import { registerMimeTypeChecker } from "./tools/file/mime-type-checker/manifest.ts";
 import { getTool, getToolBySlug, listTools } from "./core/toolRegistry.ts";
 import { applyMeta } from "./seo/meta.ts";
 import { track } from "./analytics/analytics.ts";
@@ -220,6 +228,14 @@ registerReadingTimeCalculator();
 registerSentenceCounter();
 registerWordFrequencyAnalyzer();
 
+registerTipCalculator();
+registerLoanCalculator();
+registerColorContrastChecker();
+registerUuidValidator();
+registerJsonPathFinder();
+registerMarkdownLinkExtractor();
+registerCsvDelimiterDetector();
+registerMimeTypeChecker();
 registerPasswordGenerator();
 registerRandomNumberGenerator();
 registerPercentageCalculator();
