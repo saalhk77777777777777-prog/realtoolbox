@@ -1,0 +1,6 @@
+/** TOOLBOX v0.14.91 — CSS Clamp Generator manifest. */
+import type { ToolManifest } from "../../../core/types.ts";
+import { registerTool } from "../../../core/toolRegistry.ts";
+export const fields = [{"name":"property","label":"CSS property","value":"font-size"},{"name":"min","label":"Minimum value (px)","type":"number","value":"16"},{"name":"max","label":"Maximum value (px)","type":"number","value":"32"},{"name":"minViewport","label":"Minimum viewport (px)","type":"number","value":"360"},{"name":"maxViewport","label":"Maximum viewport (px)","type":"number","value":"1440"}];
+export const manifest: ToolManifest = { id:"css-clamp-generator",version:"0.14.91",title:"CSS Clamp Generator",slug:"css-clamp-generator",category:"design",description:"CSS Clamp Generator 도구입니다.",keywords:["css-clamp-generator"],aliases:["CSS Clamp Generator"],inputTypes:["text"],outputTypes:["text","data"],localProcessing:true,relatedTools:[],load:async()=>{const [p,u]=await Promise.all([import("./processor.ts"),import("./ui.ts")]);return{manifest:{...manifest,load:undefined as never},validate:p.validate,process:async(i,c)=>{if(c.signal.aborted)throw Error("cancelled");return p.process(i)},render:u.render}}};
+export function registerCssClampGenerator(){registerTool(manifest)}

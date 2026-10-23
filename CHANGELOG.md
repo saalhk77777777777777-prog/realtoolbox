@@ -1,9 +1,108 @@
+## v0.21.0 — 2026-10-23 — JSON Patch Builder
+
+- Added: Local JSON document comparison and RFC 6902 add/remove/replace patch generation.
+- Added: JSON Pointer escaping, array diff handling, invalid JSON and 1,000,000-character input validation.
+- Added: Summary counts, copyable patch output, and root-replacement warning.
+- Tests: JSON Patch Builder unit tests cover operation types, path escaping, arrays, validation and metadata.
+- Validation: TypeScript check, focused tests (8/8), full test suite, and production build passed.
+- Status: local source changes only; no GitHub push or Netlify deployment.
+
+## v0.20.0 — 2026-10-23 — robots.txt Builder
+
+- Added: robots.txt rule builder for User-agent, Allow, Disallow, Crawl-delay and Sitemap.
+- Added: checks for path formatting, user-agent injection, sitemap URL protocols and crawl-delay bounds.
+- Added: warnings for whole-site blocking and missing sitemap/rules, plus copyable output and a starter example.
+- Tests: tests/robots-txt-builder.test.ts covers generation, validation, diagnostics and metadata.
+- Validation: TypeScript check, focused tests (8/8), full test suite, and production build passed.
+- Status: local source changes only; no GitHub push or Netlify deployment.
+
+## v0.19.0 — 2026-10-23 — CSP Header Builder
+
+- Added: CSP Header Builder creates Content-Security-Policy and Report-Only headers from directive lines.
+- Added: Local diagnostics for duplicate directives, wildcard sources, unsafe-inline/eval, missing default-src/base-uri, and suspicious values.
+- Added: Copyable header output, safe starter policy, 20,000-character input cap.
+- Tests: tests/csp-header-builder.test.ts covers header generation, Report-Only, diagnostics, validation, and metadata.
+- Validation: TypeScript check, focused tests (7/7), full test suite, and production build passed.
+- Status: source changes only; no GitHub push or Netlify deployment.
+
+## v0.18.0 — 2026-10-23 — Git Diff Analyzer
+
+- Added: Git Diff Analyzer parses unified diff locally and reports per-file additions, deletions, status, rename metadata, hunk counts, and binary files.
+- Added: CSV summary copy; 2,000,000-character input cap. It does not run Git commands or modify files.
+- Tests: tests/git-diff-analyzer.test.ts covers line counts, add/delete, binary/rename, invalid input, size limit, and metadata.
+- Validation: `npm run typecheck`, focused tests (6/6), full `npm test`, and `npm run build` passed.
+- Status: source changes only; no GitHub push or Netlify deployment.
+
+## v0.17.0 — 2026-10-23 — cURL Request Builder
+
+- Added: Developer tool curl-request-builder creates shell-safe cURL commands and JavaScript fetch examples from an HTTP method, URL, headers, and optional body.
+- Safety: HTTP(S) only, rejects embedded URL credentials and header newline injection, does not send requests, and reminds users to use token placeholders.
+- Tests: tests/curl-request-builder.test.ts covers output generation, quoting, method/body handling, URL safety, header validation, and manifest metadata.
+- Validation: `npm run typecheck`, focused tests (7/7), full `npm test`, and `npm run build` all passed.
+- Status: source changes only; no GitHub push or Netlify deployment.
+
+## v0.16.0 — 2026-10-23 — Log Timeline Correlator
+- Added: Developer tool `log-timeline-correlator` — parse text/JSONL logs, normalize levels and timestamps, merge into a timeline, summarize request IDs and durations, filter by severity/request ID, export CSV. Local browser processing only; 5 MB input cap.
+- Tests: `tests/log-timeline-correlator.test.ts` covers sorting, text/JSONL parsing, request correlation, malformed JSON fallback and input validation.
+- Status: integrated in source registry; build/test validation pending. No GitHub push or Netlify deployment performed.
+
+## v0.15.0 — 2026-10-23 — Developer workbench pack
+- Added JSON Schema Compatibility Checker for basic property, type, and required-field changes.
+- Added Bit Field Inspector for binary representation and set-bit positions.
+- Added Retry Backoff Simulator for capped exponential retry schedules.
+- All three tools run locally in the browser.
+- Added focused tests in tests/tool-pack-v0.15.0.test.ts.
+
+## v0.14.99 — 2026-10-23 — Text/JSON conversion
+- Added Text to JSON Array for converting each line into a JSON string array.
+- Added JSON Array to Lines for converting primitive JSON arrays into line-based text.
+- Both tools process locally in the browser.
+
+## v0.14.98 — 2026-10-23 — Text utilities
+- Added Text Prefix & Suffix to decorate each line with configurable text.
+- Added Text Wrap to wrap paragraphs to a bounded line width.
+- Both tools process locally in the browser.
+
+## v0.14.97 — 2026-10-23 — Text utilities
+- Added Text Line Numberer to prefix lines with aligned line numbers.
+- Added Text Repeater with bounded repeat count and output-size validation.
+- Both tools process locally in the browser.
+
+## v0.14.96 — 2026-10-23 — Text and developer utilities
+- Added Text Diff for line-by-line comparison with added/removed/unchanged line counts.
+- Added HTML Entity Decoder for common named entities and numeric character references.
+- Registered both tools for local browser processing; no deployment performed.
+
+## v0.14.94 — 2026-10-23 — Eight new utilities
+- Added Markdown Heading Extractor, CSV Row Counter, JSON Array Sorter, HTML Link Extractor, JSON String Escaper, CSV to TSV, CSS Specificity Calculator, and Markdown Link Extractor.
+- All processing runs locally in the browser.
+- Tests: tests/tool-pack-v0.14.94.test.ts.
+
+## v0.14.92 — 2026-10-23 — Eight new local tools
+- Added JSON Flattener, URL Query Parser, URL Query Builder, XML Escape, HTML to Text, CSV Row Filter, JSON Value Type Inspector, and CSS Media Query Generator.
+- Browser-local processing; review generated SQL and CSS before production use.
+- Tests: tests/tool-pack-v0.14.92.test.ts (8 tests).
+
+## v0.14.91 — 2026-10-23 — Eight data, developer, and design tools
+- Added: JSON to Zod Schema, JSON Key Sorter, TSV to CSV, URL List Validator, HTTP Header Formatter, HTML Attribute Extractor, JSON to YAML, CSS Clamp Generator.
+- Processing is local in the browser; outputs should be reviewed before use in production.
+- Tests: tests/tool-pack-v0.14.91.test.ts (8 tests).
+
+## v0.14.90 — 2026-10-23
+- Added JSON-to-TypeScript, HTML-table-to-CSV, CSV-to-Markdown, CSS box-shadow, Nginx config, Conventional Commit message, JSON array field picker, and lightweight SVG minifier tools.
+- Local processing only; no new dependencies.
+- Added eight regression tests; verify build and test suite before deploy.
+
 ## v0.14.89 — 2026-10-23
 - Added Markdown TOC generator, SQL IN clause generator, structural JSON diff, CSV column statistics, UTF-8 text/hex converter, Dockerfile generator, Docker Compose generator, and JSON mock data generator.
 - All eight tools run locally with no new dependencies.
 - Added shared local-tool UI and regression tests; validate before any deployment.
 
-## v0.14.88 — 2026-10-22\n- Added Gitignore generator, SemVer parser, chmod permission calculator, HTML escape converter, CSS gradient generator, JSON Schema inference, regex replace, and .env text validator.\n- Local processing only; no new dependencies and no production deploy.\n\n## v0.14.87 — 2026-10-22
+## v0.14.88 — 2026-10-22
+- Added Gitignore generator, SemVer parser, chmod permission calculator, HTML escape converter, CSS gradient generator, JSON Schema inference, regex replace, and .env text validator.
+- Local processing only; no new dependencies and no production deploy.
+
+## v0.14.87 — 2026-10-22
 - Added tip and loan calculators, WCAG color contrast checker, UUID validator, JSON path finder, Markdown link extractor, CSV delimiter detector, and MIME type lookup.
 - All new tools process locally; no new dependencies added.
 - Local validation required before deployment; no production deploy performed.

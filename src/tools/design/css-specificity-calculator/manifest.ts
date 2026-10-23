@@ -1,0 +1,6 @@
+/** TOOLBOX v0.14.94 — CSS Specificity Calculator. */
+import type { ToolManifest } from "../../../core/types.ts";
+import { registerTool } from "../../../core/toolRegistry.ts";
+export const fields = [{"name":"selector","label":"CSS selector","type":"textarea","value":"#app .card h2, button.active"}];
+export const manifest: ToolManifest = {id:"css-specificity-calculator",version:"0.14.94",title:"CSS Specificity Calculator",slug:"css-specificity-calculator",category:"design",description:"CSS 선택자의 ID·클래스·요소 우선순위를 계산합니다.",keywords:["css-specificity-calculator"],aliases:["CSS Specificity Calculator"],inputTypes:["text"],outputTypes:["text","data"],localProcessing:true,relatedTools:[],load:async()=>{const [processor,ui]=await Promise.all([import("./processor.ts"),import("./ui.ts")]);return{manifest:{...manifest,load:undefined as never},validate:processor.validate,process:async(i,c)=>{if(c.signal.aborted)throw Error("cancelled");return processor.process(i)},render:ui.render}}};
+export function registerCssSpecificityCalculator(){registerTool(manifest)}

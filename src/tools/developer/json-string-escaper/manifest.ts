@@ -1,0 +1,6 @@
+/** TOOLBOX v0.14.94 — JSON String Escaper. */
+import type { ToolManifest } from "../../../core/types.ts";
+import { registerTool } from "../../../core/toolRegistry.ts";
+export const fields = [{"name":"json","label":"JSON value","type":"textarea","value":"{\"hello\":\"Tabi\",\"count\":3}"}];
+export const manifest: ToolManifest = {id:"json-string-escaper",version:"0.14.94",title:"JSON String Escaper",slug:"json-string-escaper",category:"developer",description:"JSON 값을 안전한 JSON 문자열 리터럴로 변환합니다.",keywords:["json-string-escaper"],aliases:["JSON String Escaper"],inputTypes:["text"],outputTypes:["text","data"],localProcessing:true,relatedTools:[],load:async()=>{const [processor,ui]=await Promise.all([import("./processor.ts"),import("./ui.ts")]);return{manifest:{...manifest,load:undefined as never},validate:processor.validate,process:async(i,c)=>{if(c.signal.aborted)throw Error("cancelled");return processor.process(i)},render:ui.render}}};
+export function registerJsonStringEscaper(){registerTool(manifest)}

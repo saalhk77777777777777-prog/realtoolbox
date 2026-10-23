@@ -1,0 +1,8 @@
+/** TOOLBOX v0.15.0 — Retry Backoff Simulator UI. */
+import { process as run, validate } from "./processor.ts";
+export function render(mount: HTMLElement): void {
+  mount.innerHTML = "<section class='tool-panel'><h2>재시도 백오프 시뮬레이터</h2><label>재시도 횟수<input name='retries' type='number' min='0' max='20' step='1' value='5'></label><label>첫 대기 시간 (ms)<input name='initialDelay' type='number' min='0' max='86400000' step='100' value='500'></label><label>배율<input name='multiplier' type='number' min='1' max='10' step='0.5' value='2'></label><label>최대 대기 시간 (ms)<input name='maxDelay' type='number' min='0' max='86400000' step='100' value='10000'></label><button id='run' type='button'>일정 계산</button><label>결과<textarea id='out' rows='12' readonly></textarea></label><button id='copy' type='button'>결과 복사</button><p id='hint' class='muted'></p></section>";
+  const out = mount.querySelector<HTMLTextAreaElement>("#out")!, hint = mount.querySelector<HTMLElement>("#hint")!;
+  mount.querySelector("#run")!.addEventListener("click", () => { const read = (name: string) => Number(mount.querySelector<HTMLInputElement>("[name=" + name + "]")!.value); const raw = { retries: read("retries"), initialDelay: read("initialDelay"), multiplier: read("multiplier"), maxDelay: read("maxDelay") }; const e = validate(raw); if (e) { out.value = e.what + "\n" + e.how; return; } try { out.value = JSON.stringify(run(raw), null, 2); } catch (err) { out.value = err instanceof Error ? err.message : String(err); } });
+  mount.querySelector("#copy")!.addEventListener("click", async () => { try { await navigator.clipboard.writeText(out.value); hint.textContent = "복사했습니다."; } catch { hint.textContent = "클립보드 접근이 거부되었습니다."; } });
+}

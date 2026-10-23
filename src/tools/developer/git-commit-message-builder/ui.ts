@@ -1,0 +1,3 @@
+/** TOOLBOX v0.14.90 — Git Commit Message Builder UI. */
+import{process,validate}from"./processor.ts";import{renderSimpleTool}from"../../shared/simple-tool-ui.ts";
+export function render(mount:HTMLElement):void{renderSimpleTool(mount,"Git Commit Message Builder",[{"name":"type","label":"Type (feat, fix, docs, refactor, test, chore)","value":"feat"},{"name":"scope","label":"Scope (optional)","value":"toolbox"},{"name":"description","label":"Short description","value":"add new utility tools"},{"name":"breaking","label":"Breaking change (true/false)","value":"false"},{"name":"body","label":"Body (optional)","type":"textarea","value":""}],process,validate)}

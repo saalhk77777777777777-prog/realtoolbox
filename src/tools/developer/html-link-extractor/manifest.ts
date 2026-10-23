@@ -1,0 +1,6 @@
+/** TOOLBOX v0.14.94 — HTML Link Extractor. */
+import type { ToolManifest } from "../../../core/types.ts";
+import { registerTool } from "../../../core/toolRegistry.ts";
+export const fields = [{"name":"html","label":"HTML","type":"textarea","value":"<a href=\"https://example.com\">Example</a>"}];
+export const manifest: ToolManifest = {id:"html-link-extractor",version:"0.14.94",title:"HTML Link Extractor",slug:"html-link-extractor",category:"developer",description:"HTML에서 링크 주소와 표시 텍스트를 추출합니다.",keywords:["html-link-extractor"],aliases:["HTML Link Extractor"],inputTypes:["text"],outputTypes:["text","data"],localProcessing:true,relatedTools:[],load:async()=>{const [processor,ui]=await Promise.all([import("./processor.ts"),import("./ui.ts")]);return{manifest:{...manifest,load:undefined as never},validate:processor.validate,process:async(i,c)=>{if(c.signal.aborted)throw Error("cancelled");return processor.process(i)},render:ui.render}}};
+export function registerHtmlLinkExtractor(){registerTool(manifest)}

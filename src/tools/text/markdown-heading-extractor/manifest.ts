@@ -1,0 +1,6 @@
+/** TOOLBOX v0.14.94 — Markdown Heading Extractor. */
+import type { ToolManifest } from "../../../core/types.ts";
+import { registerTool } from "../../../core/toolRegistry.ts";
+export const fields = [{"name":"text","label":"Markdown","type":"textarea","value":"# Tabi\n\n## Toolbox\n\n### Tools"}];
+export const manifest: ToolManifest = {id:"markdown-heading-extractor",version:"0.14.94",title:"Markdown Heading Extractor",slug:"markdown-heading-extractor",category:"text",description:"마크다운 제목과 계층, 줄 번호, 앵커 슬러그를 추출합니다.",keywords:["markdown-heading-extractor"],aliases:["Markdown Heading Extractor"],inputTypes:["text"],outputTypes:["text","data"],localProcessing:true,relatedTools:[],load:async()=>{const [processor,ui]=await Promise.all([import("./processor.ts"),import("./ui.ts")]);return{manifest:{...manifest,load:undefined as never},validate:processor.validate,process:async(i,c)=>{if(c.signal.aborted)throw Error("cancelled");return processor.process(i)},render:ui.render}}};
+export function registerMarkdownHeadingExtractor(){registerTool(manifest)}

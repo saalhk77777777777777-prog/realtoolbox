@@ -10,6 +10,7 @@
   <url><loc>/tools/base64</loc></url>
   <url><loc>/tools/batch-file-zip-creator</loc></url>
   <url><loc>/tools/binary-text-converter</loc></url>
+  <url><loc>/tools/bit-field-inspector</loc></url>
   <url><loc>/tools/case-converter</loc></url>
   <url><loc>/tools/character-frequency</loc></url>
   <url><loc>/tools/color-contrast-checker</loc></url>
@@ -17,17 +18,28 @@
   <url><loc>/tools/color-extractor</loc></url>
   <url><loc>/tools/cron-expression-generator</loc></url>
   <url><loc>/tools/crop-rotate-flip</loc></url>
+  <url><loc>/tools/csp-header-builder</loc></url>
+  <url><loc>/tools/css-box-shadow-generator</loc></url>
+  <url><loc>/tools/css-clamp-generator</loc></url>
   <url><loc>/tools/css-formatter-minifier</loc></url>
   <url><loc>/tools/css-gradient-generator</loc></url>
+  <url><loc>/tools/css-media-query-generator</loc></url>
+  <url><loc>/tools/css-specificity-calculator</loc></url>
   <url><loc>/tools/csv-chart</loc></url>
   <url><loc>/tools/csv-cleaner</loc></url>
   <url><loc>/tools/csv-column-selector</loc></url>
   <url><loc>/tools/csv-column-stats</loc></url>
   <url><loc>/tools/csv-delimiter-detector</loc></url>
   <url><loc>/tools/csv-filter</loc></url>
+  <url><loc>/tools/csv-row-counter</loc></url>
+  <url><loc>/tools/csv-row-filter</loc></url>
   <url><loc>/tools/csv-sorter</loc></url>
   <url><loc>/tools/csv-to-json</loc></url>
+  <url><loc>/tools/csv-to-markdown-table</loc></url>
+  <url><loc>/tools/csv-to-sql-insert</loc></url>
+  <url><loc>/tools/csv-to-tsv</loc></url>
   <url><loc>/tools/csv-transpose</loc></url>
+  <url><loc>/tools/curl-request-builder</loc></url>
   <url><loc>/tools/date-calculator</loc></url>
   <url><loc>/tools/docker-compose-generator</loc></url>
   <url><loc>/tools/dockerfile-generator</loc></url>
@@ -42,12 +54,20 @@
   <url><loc>/tools/file-name-analyzer</loc></url>
   <url><loc>/tools/file-signature-checker</loc></url>
   <url><loc>/tools/file-size-checker</loc></url>
+  <url><loc>/tools/git-commit-message-builder</loc></url>
+  <url><loc>/tools/git-diff-analyzer</loc></url>
   <url><loc>/tools/gitignore-generator</loc></url>
   <url><loc>/tools/hash-generator</loc></url>
+  <url><loc>/tools/html-attribute-extractor</loc></url>
   <url><loc>/tools/html-entity</loc></url>
+  <url><loc>/tools/html-entity-decoder</loc></url>
   <url><loc>/tools/html-escape-converter</loc></url>
   <url><loc>/tools/html-formatter</loc></url>
+  <url><loc>/tools/html-link-extractor</loc></url>
+  <url><loc>/tools/html-table-to-csv</loc></url>
   <url><loc>/tools/html-tag-remover</loc></url>
+  <url><loc>/tools/html-to-text</loc></url>
+  <url><loc>/tools/http-header-formatter</loc></url>
   <url><loc>/tools/http-status-analyzer</loc></url>
   <url><loc>/tools/image-blur</loc></url>
   <url><loc>/tools/image-compressor</loc></url>
@@ -61,29 +81,44 @@
   <url><loc>/tools/image-to-pdf</loc></url>
   <url><loc>/tools/indent-unindent</loc></url>
   <url><loc>/tools/js-ts-formatter</loc></url>
+  <url><loc>/tools/json-array-field-picker</loc></url>
+  <url><loc>/tools/json-array-sorter</loc></url>
+  <url><loc>/tools/json-array-to-lines</loc></url>
   <url><loc>/tools/json-diff</loc></url>
   <url><loc>/tools/json-flatten-unflatten</loc></url>
+  <url><loc>/tools/json-flattener</loc></url>
   <url><loc>/tools/json-formatter</loc></url>
+  <url><loc>/tools/json-key-sorter</loc></url>
   <url><loc>/tools/json-lines</loc></url>
   <url><loc>/tools/json-minifier</loc></url>
   <url><loc>/tools/json-mock-data-generator</loc></url>
+  <url><loc>/tools/json-patch-builder</loc></url>
   <url><loc>/tools/json-path-finder</loc></url>
   <url><loc>/tools/json-path-query</loc></url>
+  <url><loc>/tools/json-schema-compatibility</loc></url>
   <url><loc>/tools/json-schema-infer</loc></url>
+  <url><loc>/tools/json-string-escaper</loc></url>
   <url><loc>/tools/json-to-csv</loc></url>
+  <url><loc>/tools/json-to-typescript</loc></url>
   <url><loc>/tools/json-to-xml</loc></url>
+  <url><loc>/tools/json-to-yaml</loc></url>
+  <url><loc>/tools/json-to-zod</loc></url>
+  <url><loc>/tools/json-value-type-inspector</loc></url>
   <url><loc>/tools/jwt-decoder</loc></url>
   <url><loc>/tools/line-ending-detector</loc></url>
   <url><loc>/tools/line-numberer</loc></url>
   <url><loc>/tools/line-sorter</loc></url>
   <url><loc>/tools/line-trim-tool</loc></url>
   <url><loc>/tools/loan-calculator</loc></url>
+  <url><loc>/tools/log-timeline-correlator</loc></url>
   <url><loc>/tools/lorem-ipsum-generator</loc></url>
+  <url><loc>/tools/markdown-heading-extractor</loc></url>
   <url><loc>/tools/markdown-link-extractor</loc></url>
   <url><loc>/tools/markdown-table-generator</loc></url>
   <url><loc>/tools/markdown-toc-generator</loc></url>
   <url><loc>/tools/mime-type-checker</loc></url>
   <url><loc>/tools/newline-converter</loc></url>
+  <url><loc>/tools/nginx-config-generator</loc></url>
   <url><loc>/tools/number-base-converter</loc></url>
   <url><loc>/tools/number-extractor</loc></url>
   <url><loc>/tools/password-generator</loc></url>
@@ -110,31 +145,45 @@
   <url><loc>/tools/regex-escape</loc></url>
   <url><loc>/tools/regex-replace</loc></url>
   <url><loc>/tools/regex-tester</loc></url>
+  <url><loc>/tools/retry-backoff-simulator</loc></url>
+  <url><loc>/tools/robots-txt-builder</loc></url>
   <url><loc>/tools/roman-numeral-converter</loc></url>
   <url><loc>/tools/semver-parser</loc></url>
   <url><loc>/tools/sentence-counter</loc></url>
   <url><loc>/tools/slug-generator</loc></url>
   <url><loc>/tools/sql-formatter</loc></url>
   <url><loc>/tools/sql-in-clause-generator</loc></url>
+  <url><loc>/tools/svg-minifier</loc></url>
   <url><loc>/tools/target-size-compressor</loc></url>
   <url><loc>/tools/text-counter</loc></url>
   <url><loc>/tools/text-diff</loc></url>
   <url><loc>/tools/text-hex-converter</loc></url>
+  <url><loc>/tools/text-line-numberer</loc></url>
+  <url><loc>/tools/text-prefix-suffix</loc></url>
+  <url><loc>/tools/text-repeater</loc></url>
   <url><loc>/tools/text-reverser</loc></url>
+  <url><loc>/tools/text-to-json-array</loc></url>
+  <url><loc>/tools/text-wrap</loc></url>
   <url><loc>/tools/timestamp-converter</loc></url>
   <url><loc>/tools/tip-calculator</loc></url>
+  <url><loc>/tools/tsv-to-csv</loc></url>
   <url><loc>/tools/unicode-inspector</loc></url>
   <url><loc>/tools/unit-converter</loc></url>
   <url><loc>/tools/unix-permission-calculator</loc></url>
   <url><loc>/tools/url-encoder</loc></url>
   <url><loc>/tools/url-extractor</loc></url>
+  <url><loc>/tools/url-list-validator</loc></url>
   <url><loc>/tools/url-parser</loc></url>
+  <url><loc>/tools/url-query-builder</loc></url>
+  <url><loc>/tools/url-query-parser</loc></url>
+  <url><loc>/tools/url-slug-generator</loc></url>
   <url><loc>/tools/uuid-generator</loc></url>
   <url><loc>/tools/uuid-validator</loc></url>
   <url><loc>/tools/video-to-webp</loc></url>
   <url><loc>/tools/whitespace-cleaner</loc></url>
   <url><loc>/tools/whitespace-visualizer</loc></url>
   <url><loc>/tools/word-frequency-analyzer</loc></url>
+  <url><loc>/tools/xml-escape</loc></url>
   <url><loc>/tools/xml-formatter</loc></url>
   <url><loc>/tools/xml-to-json</loc></url>
   <url><loc>/tools/yaml-formatter</loc></url>

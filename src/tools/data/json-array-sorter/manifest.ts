@@ -1,0 +1,6 @@
+/** TOOLBOX v0.14.94 — JSON Array Sorter. */
+import type { ToolManifest } from "../../../core/types.ts";
+import { registerTool } from "../../../core/toolRegistry.ts";
+export const fields = [{"name":"json","label":"JSON array","type":"textarea","value":"[{\"name\":\"Timi\",\"level\":2},{\"name\":\"Tabi\",\"level\":3}]"},{"name":"key","label":"Object key (optional)","value":"level"},{"name":"direction","label":"ascending / descending","value":"ascending"}];
+export const manifest: ToolManifest = {id:"json-array-sorter",version:"0.14.94",title:"JSON Array Sorter",slug:"json-array-sorter",category:"data",description:"JSON 배열을 값 또는 객체 속성 기준으로 정렬합니다.",keywords:["json-array-sorter"],aliases:["JSON Array Sorter"],inputTypes:["text"],outputTypes:["text","data"],localProcessing:true,relatedTools:[],load:async()=>{const [processor,ui]=await Promise.all([import("./processor.ts"),import("./ui.ts")]);return{manifest:{...manifest,load:undefined as never},validate:processor.validate,process:async(i,c)=>{if(c.signal.aborted)throw Error("cancelled");return processor.process(i)},render:ui.render}}};
+export function registerJsonArraySorter(){registerTool(manifest)}

@@ -1,0 +1,6 @@
+/** TOOLBOX v0.14.98 — Text Prefix & Suffix — 줄 앞뒤 문구 추가. */
+import type { ToolManifest } from "../../../core/types.ts";
+import { registerTool } from "../../../core/toolRegistry.ts";
+export const fields = [{"name":"text","label":"텍스트","type":"textarea","value":"apple\nbanana\ncherry"},{"name":"prefix","label":"줄 앞에 추가","type":"text","value":"- "},{"name":"suffix","label":"줄 뒤에 추가","type":"text","value":";"}];
+export const manifest: ToolManifest = {id:"text-prefix-suffix",version:"0.14.98",title:"Text Prefix & Suffix — 줄 앞뒤 문구 추가",slug:"text-prefix-suffix",category:"text",description:"각 텍스트 줄의 앞과 뒤에 원하는 문구를 붙입니다.",keywords:["text-prefix-suffix","Text Prefix & Suffix — 줄 앞뒤 문구 추가","텍스트","줄 정리"],aliases:["Text Prefix & Suffix — 줄 앞뒤 문구 추가"],inputTypes:["text"],outputTypes:["text","data"],localProcessing:true,relatedTools:["text-counter","whitespace-cleaner"],load:async()=>{const [p,u]=await Promise.all([import("./processor.ts"),import("./ui.ts")]);return{manifest:{...manifest,load:undefined as never},validate:p.validate,process:async(i,c)=>{if(c.signal.aborted)throw Error("cancelled");return p.process(i)},render:u.render}}};
+export function registerTextPrefixSuffix(){registerTool(manifest)}
