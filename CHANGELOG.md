@@ -1,3 +1,9 @@
+## v0.21.1 — 2026-10-23 — Startup crash fix
+
+- Fixed: Removed duplicate registration of the Text Diff manifest that threw Duplicate tool id: text-diff during app startup and prevented the entire UI from rendering.
+- Validation: duplicate-registration scan, TypeScript check, full tests, and production build.
+- Status: fix prepared locally; awaiting validation and redeployment.
+
 ## v0.21.0 — 2026-10-23 — JSON Patch Builder
 
 - Added: Local JSON document comparison and RFC 6902 add/remove/replace patch generation.

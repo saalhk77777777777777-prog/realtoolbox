@@ -76,7 +76,6 @@ import { registerWhitespaceVisualizer } from "./tools/text/whitespace-visualizer
 import { registerMarkdownTableGenerator } from "./tools/developer/markdown-table-generator/manifest.ts";
 import { registerRegexEscape } from "./tools/developer/regex-escape/manifest.ts";
 import { registerHtmlEntityDecoder } from "./tools/developer/html-entity-decoder/manifest.ts";
-import { registerTextDiff } from "./tools/text/text-diff/manifest.ts";
 import { registerTextLineNumberer } from "./tools/text/text-line-numberer/manifest.ts";
 import { registerTextRepeater } from "./tools/text/text-repeater/manifest.ts";
 import { registerTextPrefixSuffix } from "./tools/text/text-prefix-suffix/manifest.ts";
@@ -270,7 +269,6 @@ registerNumberBaseConverter();
 registerMarkdownTableGenerator();
 registerRegexEscape();
 registerHtmlEntityDecoder();
-registerTextDiff();
 registerTextLineNumberer();
 registerTextRepeater();
 registerTextPrefixSuffix();
