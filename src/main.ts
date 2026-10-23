@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.88 — eight more developer and productivity tools. */
+/** TOOLBOX v0.14.89 — eight additional developer and data tools. */
 import { APP_VERSION } from "./version.ts";
 import { installAdsense } from "./adsense.ts";
 import { installTabiEasterEggs } from "./easter-eggs/tabi-easter-eggs.ts";
@@ -128,6 +128,14 @@ import { registerCssGradientGenerator } from "./tools/design/css-gradient-genera
 import { registerJsonSchemaInfer } from "./tools/data/json-schema-infer/manifest.ts";
 import { registerRegexReplace } from "./tools/text/regex-replace/manifest.ts";
 import { registerEnvFileValidator } from "./tools/developer/env-file-validator/manifest.ts";
+import { registerMarkdownTocGenerator } from "./tools/developer/markdown-toc-generator/manifest.ts";
+import { registerSqlInClauseGenerator } from "./tools/developer/sql-in-clause-generator/manifest.ts";
+import { registerJsonDiff } from "./tools/data/json-diff/manifest.ts";
+import { registerCsvColumnStats } from "./tools/data/csv-column-stats/manifest.ts";
+import { registerTextHexConverter } from "./tools/developer/text-hex-converter/manifest.ts";
+import { registerDockerfileGenerator } from "./tools/developer/dockerfile-generator/manifest.ts";
+import { registerDockerComposeGenerator } from "./tools/developer/docker-compose-generator/manifest.ts";
+import { registerJsonMockDataGenerator } from "./tools/data/json-mock-data-generator/manifest.ts";
 import { getTool, getToolBySlug, listTools } from "./core/toolRegistry.ts";
 import { applyMeta } from "./seo/meta.ts";
 import { track } from "./analytics/analytics.ts";
@@ -252,6 +260,15 @@ registerCssGradientGenerator();
 registerJsonSchemaInfer();
 registerRegexReplace();
 registerEnvFileValidator();
+registerMarkdownTocGenerator();
+registerSqlInClauseGenerator();
+registerJsonDiff();
+registerCsvColumnStats();
+registerTextHexConverter();
+registerDockerfileGenerator();
+registerDockerComposeGenerator();
+registerJsonMockDataGenerator();
+
 registerPasswordGenerator();
 registerRandomNumberGenerator();
 registerPercentageCalculator();

@@ -1,3 +1,8 @@
+## v0.14.89 — 2026-10-23
+- Added Markdown TOC generator, SQL IN clause generator, structural JSON diff, CSV column statistics, UTF-8 text/hex converter, Dockerfile generator, Docker Compose generator, and JSON mock data generator.
+- All eight tools run locally with no new dependencies.
+- Added shared local-tool UI and regression tests; validate before any deployment.
+
 ## v0.14.88 — 2026-10-22\n- Added Gitignore generator, SemVer parser, chmod permission calculator, HTML escape converter, CSS gradient generator, JSON Schema inference, regex replace, and .env text validator.\n- Local processing only; no new dependencies and no production deploy.\n\n## v0.14.87 — 2026-10-22
 - Added tip and loan calculators, WCAG color contrast checker, UUID validator, JSON path finder, Markdown link extractor, CSV delimiter detector, and MIME type lookup.
 - All new tools process locally; no new dependencies added.

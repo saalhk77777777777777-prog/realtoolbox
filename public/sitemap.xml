@@ -22,12 +22,15 @@
   <url><loc>/tools/csv-chart</loc></url>
   <url><loc>/tools/csv-cleaner</loc></url>
   <url><loc>/tools/csv-column-selector</loc></url>
+  <url><loc>/tools/csv-column-stats</loc></url>
   <url><loc>/tools/csv-delimiter-detector</loc></url>
   <url><loc>/tools/csv-filter</loc></url>
   <url><loc>/tools/csv-sorter</loc></url>
   <url><loc>/tools/csv-to-json</loc></url>
   <url><loc>/tools/csv-transpose</loc></url>
   <url><loc>/tools/date-calculator</loc></url>
+  <url><loc>/tools/docker-compose-generator</loc></url>
+  <url><loc>/tools/dockerfile-generator</loc></url>
   <url><loc>/tools/duplicate-finder</loc></url>
   <url><loc>/tools/duplicate-line-remover</loc></url>
   <url><loc>/tools/env-file-validator</loc></url>
@@ -58,10 +61,12 @@
   <url><loc>/tools/image-to-pdf</loc></url>
   <url><loc>/tools/indent-unindent</loc></url>
   <url><loc>/tools/js-ts-formatter</loc></url>
+  <url><loc>/tools/json-diff</loc></url>
   <url><loc>/tools/json-flatten-unflatten</loc></url>
   <url><loc>/tools/json-formatter</loc></url>
   <url><loc>/tools/json-lines</loc></url>
   <url><loc>/tools/json-minifier</loc></url>
+  <url><loc>/tools/json-mock-data-generator</loc></url>
   <url><loc>/tools/json-path-finder</loc></url>
   <url><loc>/tools/json-path-query</loc></url>
   <url><loc>/tools/json-schema-infer</loc></url>
@@ -76,6 +81,7 @@
   <url><loc>/tools/lorem-ipsum-generator</loc></url>
   <url><loc>/tools/markdown-link-extractor</loc></url>
   <url><loc>/tools/markdown-table-generator</loc></url>
+  <url><loc>/tools/markdown-toc-generator</loc></url>
   <url><loc>/tools/mime-type-checker</loc></url>
   <url><loc>/tools/newline-converter</loc></url>
   <url><loc>/tools/number-base-converter</loc></url>
@@ -109,9 +115,11 @@
   <url><loc>/tools/sentence-counter</loc></url>
   <url><loc>/tools/slug-generator</loc></url>
   <url><loc>/tools/sql-formatter</loc></url>
+  <url><loc>/tools/sql-in-clause-generator</loc></url>
   <url><loc>/tools/target-size-compressor</loc></url>
   <url><loc>/tools/text-counter</loc></url>
   <url><loc>/tools/text-diff</loc></url>
+  <url><loc>/tools/text-hex-converter</loc></url>
   <url><loc>/tools/text-reverser</loc></url>
   <url><loc>/tools/timestamp-converter</loc></url>
   <url><loc>/tools/tip-calculator</loc></url>
