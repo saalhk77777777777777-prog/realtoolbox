@@ -67,33 +67,42 @@ async function getFFmpeg(onStatus: (message: string) => void): Promise<FFmpeg> {
     const basePath = `${import.meta.env.BASE_URL}ffmpeg/`;
     const baseURL = new URL(basePath, window.location.origin);
     const coreAssetURL = new URL("ffmpeg-core.js", baseURL).href;
-    const wasmAssetURL = new URL("ffmpeg-core.wasm", baseURL).href;
     let instance = new FFmpeg();
     let coreBlobURL: string | null = null;
     let wasmBlobURL: string | null = null;
 
     try {
-      // Blob URLs avoid MIME/CORS edge cases on static hosts. If a browser blocks
-      // Blob modules, retry once with the same-origin static files directly.
       onStatus("변환 엔진을 준비하는 중입니다. 처음에는 잠시 걸릴 수 있어요.");
+      coreBlobURL = await toBlobURL(coreAssetURL, "text/javascript");
+
+      // v0.21.2: The compressed WASM stays below Cloudflare Pages' 25 MiB asset limit.
+      // Decompress it in the browser before giving the Blob URL to FFmpeg.
+      const compressedWasmURL = new URL("ffmpeg-core.wasm.gz", baseURL).href;
+      const response = await fetch(compressedWasmURL);
+      if (!response.ok || !response.body) {
+        throw new Error("압축된 변환 엔진 요청 실패: HTTP " + response.status);
+      }
+      if (!("DecompressionStream" in globalThis)) {
+        throw new Error("이 브라우저는 gzip 스트림 압축 해제를 지원하지 않습니다. 최신 Chrome 또는 Edge를 사용해 주세요.");
+      }
+      const decompressed = response.body.pipeThrough(new DecompressionStream("gzip"));
+      const wasmBytes = await new Response(decompressed).arrayBuffer();
+      wasmBlobURL = URL.createObjectURL(new Blob([wasmBytes], { type: "application/wasm" }));
+
       try {
-        coreBlobURL = await toBlobURL(coreAssetURL, "text/javascript");
-        wasmBlobURL = await toBlobURL(wasmAssetURL, "application/wasm");
         await instance.load({ coreURL: coreBlobURL, wasmURL: wasmBlobURL });
       } catch (blobError) {
         instance.terminate();
         if (coreBlobURL) URL.revokeObjectURL(coreBlobURL);
-        if (wasmBlobURL) URL.revokeObjectURL(wasmBlobURL);
         coreBlobURL = null;
-        wasmBlobURL = null;
         onStatus("대체 방식으로 변환 엔진을 불러오는 중입니다.");
         instance = new FFmpeg();
         try {
-          await instance.load({ coreURL: coreAssetURL, wasmURL: wasmAssetURL });
+          await instance.load({ coreURL: coreAssetURL, wasmURL: wasmBlobURL });
         } catch (directError) {
           const blobMessage = blobError instanceof Error ? blobError.message : String(blobError);
           const directMessage = directError instanceof Error ? directError.message : String(directError);
-          throw new Error(`Blob 방식: ${blobMessage}; 직접 로드 방식: ${directMessage}`);
+          throw new Error("Blob 방식: " + blobMessage + "; 대체 로드 방식: " + directMessage);
         }
       }
       ffmpeg = instance;

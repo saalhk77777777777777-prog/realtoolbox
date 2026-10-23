@@ -1,3 +1,11 @@
+## v0.21.2 — Cloudflare Pages FFmpeg asset limit
+
+- Changed: gzip-compressed the FFmpeg WASM asset to 10.2 MiB so it fits Cloudflare Pages' 25 MiB per-file limit.
+- Changed: Video to WebP now decompresses the WASM locally in the browser before loading FFmpeg; video files remain on-device.
+- Removed: the uncompressed 30.7 MiB WASM from the public build output.
+- Validation: pending typecheck, tests, build, and verification of output asset sizes.
+- Status: local changes only; no push or deployment performed.
+
 ## v0.21.1 — 2026-10-23 — Startup crash fix
 
 - Fixed: Removed duplicate registration of the Text Diff manifest that threw Duplicate tool id: text-diff during app startup and prevented the entire UI from rendering.

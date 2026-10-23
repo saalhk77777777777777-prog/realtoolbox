@@ -1,2 +1,2 @@
-/** TOOLBOX v0.15.0 — developer, schema, and reliability utilities. */
-export const APP_VERSION = "0.21.1";
+/** TOOLBOX v0.21.2 — Cloudflare Pages-compatible compressed FFmpeg WASM loading. */
+export const APP_VERSION = "0.21.2";
