@@ -1,3 +1,11 @@
+## v0.21.5 — Cloudflare Pages redirect-loop fix
+
+- Fixed: Removed the legacy GitHub Pages 404 redirect that sent every missing route to `/TOOLBOX/`, causing an infinite loop on Cloudflare Pages.
+- Added: Cloudflare Pages `public/_redirects` rules to canonicalize legacy `/TOOLBOX` paths and route application paths to the SPA entry point.
+- Changed: The 404 page is now a safe static not-found page and does not redirect itself.
+- Validation: typecheck, full tests, and production build passed locally; deployed URL check pending.
+- Status: local changes only; no push or deployment performed.
+
 ## v0.21.2 — Cloudflare Pages FFmpeg asset limit
 
 - Changed: gzip-compressed the FFmpeg WASM asset to 10.2 MiB so it fits Cloudflare Pages' 25 MiB per-file limit.
@@ -822,4 +830,10 @@ PDF 도구 6개는 이전에 "validator만 통과하는 껍데기"였다. 정규
 ## v0.14.80 — 2026-10-17 — AdSense ads.txt seller verification
 - Added `public/ads.txt` with the exact seller line supplied by the site owner: `google.com, pub-2603754934068938, DIRECT, f08c47fec0942fa0`.
 - Updated AdSense setup documentation and deployment script to v0.14.80.
-- This file does not indicate AdSense approval or guarantee ad delivery; verify the deployed `/ads.txt` URL and site status in AdSense.
+- This file does not indicate AdSense approval or guarantee ad delivery; verify the deployed `/ads.txt` URL and site status in AdSense.## v0.21.5 — Cloudflare Pages redirect-loop fix
+
+- Fixed: Removed the legacy GitHub Pages 404 redirect that sent every missing route to `/TOOLBOX/`, causing an infinite loop on Cloudflare Pages.
+- Added: Cloudflare Pages `public/_redirects` rules to canonicalize legacy `/TOOLBOX` paths and route application paths to the SPA entry point.
+- Changed: The 404 page is now a safe static not-found page and does not redirect itself.
+- Validation: pending typecheck, tests, production build, and deployed URL checks.
+- Status: local changes only; no push or deployment performed.\n

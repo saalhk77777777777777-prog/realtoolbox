@@ -1,4 +1,4 @@
-/** TOOLBOX v0.14.81 — Generate canonical sitemap and robots URLs from the deployed site URL. */
+/** TOOLBOX v0.21.4 — Generate sitemap and robots.txt for the canonical Cloudflare Pages host. */
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -6,10 +6,17 @@ import { APP_VERSION } from "../src/version";
 
 const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const PUBLIC = join(ROOT, "public");
-const baseCandidate = process.env.SITE_URL || process.env.URL || process.env.DEPLOY_PRIME_URL || "";
-const baseUrl = baseCandidate.trim().replace(/\/+$/, "");
-const basePath = (process.env.VITE_BASE_PATH || "/").replace(/\/+$/, "");
-const routePath = (path: string) => `${basePath}${path === "/" ? "/" : path}`;
+const CANONICAL_SITE_URL = "https://realtoolbox.pages.dev";
+const configuredSiteUrl = (process.env.SITE_URL || CANONICAL_SITE_URL).trim().replace(/\/+$/, "");
+const basePath = process.env.VITE_BASE_PATH || "/";
+
+if (configuredSiteUrl !== CANONICAL_SITE_URL) {
+  throw new Error(`TOOLBOX sitemap target mismatch: SITE_URL must be ${CANONICAL_SITE_URL}, received ${configuredSiteUrl}`);
+}
+if (basePath !== "/") {
+  throw new Error(`TOOLBOX sitemap target mismatch: VITE_BASE_PATH must be "/", received ${basePath}`);
+}
+
 const paths = new Set<string>(["/", "/about", "/privacy", "/terms", "/contact"]);
 function walk(dir: string): void {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -24,9 +31,9 @@ function walk(dir: string): void {
 }
 walk(join(ROOT, "src/tools"));
 const escapeXml = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
-const loc = (path: string) => escapeXml(baseUrl ? `${baseUrl}${routePath(path)}` : routePath(path));
+const loc = (path: string) => escapeXml(`${CANONICAL_SITE_URL}${path}`);
 const urls = [...paths].sort((a, b) => a === "/" ? -1 : b === "/" ? 1 : a.localeCompare(b));
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((path) => `  <url><loc>${loc(path)}</loc></url>`).join("\n")}\n</urlset>\n`;
 writeFileSync(join(PUBLIC, "sitemap.xml"), xml, "utf8");
-writeFileSync(join(PUBLIC, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${baseUrl ? `${baseUrl}${basePath}/sitemap.xml` : `${basePath || ""}/sitemap.xml`}\n`, "utf8");
-console.log(`TOOLBOX v${APP_VERSION} sitemap generated: ${urls.length} routes${baseUrl ? ` (${baseUrl})` : " (relative paths; set SITE_URL for production canonical URLs)"}`);
+writeFileSync(join(PUBLIC, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${CANONICAL_SITE_URL}/sitemap.xml\n`, "utf8");
+console.log(`TOOLBOX v${APP_VERSION} sitemap generated: ${urls.length} absolute routes (${CANONICAL_SITE_URL})`);

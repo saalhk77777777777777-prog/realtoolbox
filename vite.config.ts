@@ -1,16 +1,30 @@
 import { defineConfig } from "vite";
 
-const siteUrl = (process.env.SITE_URL || process.env.URL || process.env.DEPLOY_PRIME_URL || "").trim().replace(/\/+$/, "");
+const CANONICAL_SITE_URL = "https://realtoolbox.pages.dev";
+const configuredSiteUrl = (process.env.SITE_URL || CANONICAL_SITE_URL).trim().replace(/\/+$/, "");
 const basePath = process.env.VITE_BASE_PATH || "/";
 
-// TOOLBOX v0.14.66 — GitHub Pages project path and deployment-aware canonical URL
+// TOOLBOX v0.21.4 — Cloudflare Pages is the canonical production target.
+// Alternate deployment environments are rejected by the deployment preflight.
+if (configuredSiteUrl !== CANONICAL_SITE_URL) {
+  throw new Error(`TOOLBOX deployment target mismatch: SITE_URL must be ${CANONICAL_SITE_URL}, received ${configuredSiteUrl}`);
+}
+if (basePath !== "/") {
+  throw new Error(`TOOLBOX deployment target mismatch: VITE_BASE_PATH must be "/", received ${basePath}`);
+}
+
 export default defineConfig({
-  base: basePath.endsWith("/") ? basePath : `${basePath}/`,
+  base: "/",
   plugins: [{
     name: "toolbox-deployment-canonical",
     transformIndexHtml(html) {
-      if (!siteUrl) return html;
-      return html.replace('rel="canonical" href="/"', `rel="canonical" href="${siteUrl}/"`);
+      let result = html.replace('rel="canonical" href="/"', `rel="canonical" href="${CANONICAL_SITE_URL}/"`);
+      if (result.includes('property="og:url"')) {
+        result = result.replace(/<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${CANONICAL_SITE_URL}/" />`);
+      } else {
+        result = result.replace('<meta property="og:type" content="website" />', `<meta property="og:type" content="website" />\n    <meta property="og:url" content="${CANONICAL_SITE_URL}/" />`);
+      }
+      return result;
     },
   }],
   build: {

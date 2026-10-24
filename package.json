@@ -1,17 +1,18 @@
 {
   "name": "toolbox",
-  "version": "0.21.2",
+  "version": "0.21.5",
   "private": true,
   "description": "TOOLBOX — Local-first universal web workspace",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run sitemap:generate && tsc --noEmit && vite build",
+    "build": "npm run sitemap:generate && npm run preflight:deployment && tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run --maxWorkers=2",
     "typecheck": "tsc --noEmit",
-    "preflight:adsense": "npm run sitemap:generate && tsx scripts/preflight-adsense.ts",
-    "sitemap:generate": "tsx scripts/generate-sitemap.ts"
+    "preflight:adsense": "npm run sitemap:generate && npm run preflight:deployment && tsx scripts/preflight-adsense.ts",
+    "sitemap:generate": "tsx scripts/generate-sitemap.ts",
+    "preflight:deployment": "tsx scripts/preflight-deployment.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",
